@@ -1,0 +1,44 @@
+.post {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.imgContainer {
+    position: relative;
+    height: 250px;
+    min-width: 300px;
+}
+
+.imgContainer img {
+    object-fit: cover;
+}
+.cat{
+    color: rgb(193, 26, 26);
+    font-weight: 500;
+}
+.details {
+    font-size: .9rem;
+    display: flex;
+    align-items: center;
+}
+
+.details .date {
+    color: var(--softTextColor);
+    font-size: .8rem;
+}
+
+.postTextContent {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.postTitle {
+    font-size: 1.2rem;
+}
+
+.postDesc {
+    color: var(--softTextColor);
+}
