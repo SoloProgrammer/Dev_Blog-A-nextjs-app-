@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>
+      <Link href={"/"} className={styles.logo}>
         <div className={styles.logoText}>Dev_Blog</div>
         <div className={styles.logoImg}>
           <Image
@@ -25,7 +25,7 @@ const Navbar = () => {
             }
           />
         </div>
-      </div>
+      </Link>
       <div
         onClick={toggleSideBar}
         style={{ display: !hide ? "block" : "none" }}

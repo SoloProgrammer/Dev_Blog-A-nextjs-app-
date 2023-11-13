@@ -46,21 +46,21 @@ const Footer = () => {
         </div>
       </div>
       <div className={styles.right}>
-        <div className={styles.links}>
+        <div className={styles.list}>
           <h4 className={styles.heading}>Links</h4>
           <span>Home</span>
           <span>About</span>
           <span>Contact</span>
           <span>Blog</span>
         </div>
-        <div className={styles.tags}>
+        <div className={styles.list}>
           <h4 className={styles.heading}>Tags</h4>
           <span>News</span>
           <span>Travel</span>
           <span>Coding</span>
           <span>Culture</span>
         </div>
-        <div className={styles.socialsTexts}>
+        <div className={styles.list}>
           <h4 className={styles.heading}>Social</h4>
           <span>Instagram</span>
           <span>Facebook</span>

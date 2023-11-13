@@ -10,7 +10,7 @@ const CategoryList = () => {
         <h2>Popular Categories</h2>
       </div>
       <div className={styles.categories}>
-        <Link href={"/blog"} className={`${styles.category} ${styles.style}`}>
+        <Link href={"/blog?category=news"} className={`${styles.category} ${styles.style}`}>
           <div className={styles.imgContainer}>
             <Image src="/news.png" fill alt="cat_image" />
           </div>

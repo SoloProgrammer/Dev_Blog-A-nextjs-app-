@@ -42,3 +42,14 @@
 .postDesc {
     color: var(--softTextColor);
 }
+
+@media screen and (max-width:1100px) {
+    .post{
+        flex-direction: column;
+    }
+    .imgContainer{
+        height: 200px;
+        width: 100%;
+    }
+
+}

@@ -49,6 +49,12 @@ a {
   max-width: 80%;
   margin: 0 auto;
   padding: 0 50px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.children{
+  flex-grow: 1;
 }
 
 /* Media queries */

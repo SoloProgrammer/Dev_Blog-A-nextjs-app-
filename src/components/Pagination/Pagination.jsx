@@ -6,7 +6,7 @@ const Pagination = () => {
     <div className={styles.pagination}>
       <div className={`${styles.prevBtn} ${styles.btn}`}>
         <span style={{fontSize:'.9rem'}} className="material-symbols-outlined ">arrow_back_ios</span>
-        Previous
+        Prev
       </div>
       <div className={`${styles.nextBtn} ${styles.btn}`}>
         Next

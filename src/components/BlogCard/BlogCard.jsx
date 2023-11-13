@@ -25,7 +25,7 @@ const BlogCard = () => {
           maxime hic nam quod, ipsa nostrum modi. Enim doloribus atque dolor rem
           odio accusantium ipsa iure, amet veritatis? Quod, quis quae?
         </p>
-        <Link href={"/blog"}>
+        <Link href={"/blog/1234"}>
           <Commonbtn text={"Read more"} size="small" icon={icon} />
         </Link>
       </div>

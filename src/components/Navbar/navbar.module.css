@@ -24,23 +24,27 @@
 .userIcon {
     border-radius: 50%;
 }
-.logo{
+
+.logo {
     display: flex;
     cursor: pointer;
     align-items: center;
     gap: 5px;
 }
-.logoImg{
+
+.logoImg {
     position: relative;
     width: 30px;
     height: 30px;
 }
-.logoImg{
+
+.logoImg img {
     object-fit: cover;
 }
+
 .logoText {
     font-weight: bold;
-    font-size: 1.9rem;
+    font-size: 2rem;
     flex: 1;
     background: linear-gradient(0deg, #3359fa 0%, #66c6db 100%);
     background-clip: text;
@@ -77,7 +81,7 @@
         flex-direction: column;
         top: 0;
         height: 100vh;
-        left: -100%;
+        left: -130%;
         padding: 10px 100px;
         justify-content: center;
         font-size: large;
@@ -85,6 +89,10 @@
         align-items: center;
         box-shadow: var(--shadowLight);
         gap: 50px;
+    }
+
+    .logoText {
+        font-size: 3vmax;
     }
 
     .linksCenter a {
@@ -99,5 +107,9 @@
 
     .linksCenter.show {
         left: -10%;
+    }
+    .logoImg{
+        width: 25px;
+        height: 25px;
     }
 }

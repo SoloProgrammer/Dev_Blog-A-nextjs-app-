@@ -94,3 +94,16 @@
 .date {
     font-size: .8rem;
 }
+
+@media screen and (max-width:1100px) {
+    .container {
+        flex: 3;
+    }
+
+}
+
+@media screen and (max-width:640px) {
+    .container {
+        /* display: none; */
+    }
+}

@@ -1,0 +1,80 @@
+.container {
+    margin-top: 30px;
+    display: flex;
+    gap: 50px;
+}
+
+.infoContainer {
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    flex: 5;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top span {
+    cursor: pointer;
+}
+
+.title {
+    font-size: 3vmax;
+}
+
+.desc {
+    font-size: 1.1rem;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+}
+
+.user {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.userImg {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.userImg img {
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.userText {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--softTextColor);
+}
+
+.userName {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.date {
+    font-size: .85rem;
+}
+
+.imgContainer {
+    position: relative;
+    height: 400px;
+}
+
+.imgContainer img {
+    object-fit: cover;
+    border-radius: .4rem;
+}
