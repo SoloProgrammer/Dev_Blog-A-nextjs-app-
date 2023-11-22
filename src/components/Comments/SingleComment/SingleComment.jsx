@@ -11,7 +11,7 @@ const SingleComment = () => {
             </div>
             <div className={styles.userText}>
                 <span className={styles.userName}>John Doe</span>
-                <span className={styles.date}>11 April - 12:89 PM</span>
+                <span className={styles.date}>11 April 2023 At 12:89 PM</span>
             </div>
         </div>
         <p className={styles.commentText}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque eum perspiciatis at voluptates nihil suscipit, non </p>

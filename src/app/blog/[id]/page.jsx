@@ -48,9 +48,11 @@ const SingleBlogPage = () => {
             voluptatum ab officia pariatur cupiditate!
           </p>
         </div>
-        <Comments/>
+        <Comments />
       </div>
-      <Menu />
+      <div className={styles.Menu}>
+        <Menu />
+      </div>
     </div>
   );
 };

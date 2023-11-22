@@ -17,7 +17,7 @@
 }
 .btn::before{
     position: absolute;
-    transition: .3s all cubic-bezier(0.175, 0.285, 0.32, 1.275);
+    transition: .5s all cubic-bezier(0.175, 0.285, 0.32, 1.275);
     border-radius: .3rem;
     top: 0;
     left: 0;
@@ -28,6 +28,6 @@
     background: linear-gradient(45deg, #3023AE 0%, #FF0099 100%);
 
 }
-.btn:hover::before{
+.btn.animateBtn:hover::before{
     transform: rotate(180deg);
 }

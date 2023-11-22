@@ -7,6 +7,7 @@
     top: 0;
     background: var(--bg);
     z-index: 3;
+    transition: .2s all;
 }
 
 .social {
@@ -87,7 +88,7 @@
         font-size: large;
         transition: .2s all;
         align-items: center;
-        box-shadow: var(--shadowLight);
+        box-shadow: var(--shadow-light);
         gap: 50px;
     }
 

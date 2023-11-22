@@ -3,13 +3,17 @@
   --textColor: black;
   --softBg: #f0f0f0;
   --softTextColor: #626262;
-  --shadow-light: 0 0 5px rgba(0, 0, 0, .2)
+  --bg-lighter: rgba(0, 0, 0, .025);
+  --shadow-light: 0 0 5px rgba(0, 0, 0, .2);
+  --lightGray: lightSlateGray;
+  --main-color: #7058ff;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -26,7 +30,9 @@ a {
   --bg: #0f172a;
   --textColor: #ddd;
   --softBg: #1f273a;
-  --shadowLight: 0 0 10px var(--softBg);
+  --shadow-light: 0 0 5px var(--bg-light);
+  --bg-lighter: rgba(255, 255, 255, .025);
+  --bg-light: rgba(255, 255, 255, .1);
   --softTextColor: #a6a6a6;
 }
 
@@ -34,7 +40,8 @@ a {
   --bg: white;
   --textColor: rgb(14, 14, 14);
   --softBg: #f0f0f0;
-  --shadowLight: 0 0 10px rgba(0, 0, 0, .3);
+  --shadow-light: 0 0 5px rgba(0, 0, 0, .2);
+  --bg-light: rgba(0, 0, 0, .025);
   --softTextColor: #626262;
 }
 
@@ -53,37 +60,56 @@ a {
   min-height: 100vh;
   flex-direction: column;
 }
-.children{
+
+.children {
   flex-grow: 1;
 }
 
-/* Media queries */
+.ql-container {
+  font-size: 28px !important;
+}
 
-@media screen and (max-width:1536px) {
+.quill>.ql-container .ql-editor.ql-blank::before {
+  color: #b3b3b1 !important;
+}
 
-  .wrapper {
-    max-width: 80%;
-  }
+.ql-container .ql-editor.ql-blank {
+  min-height: 300px !important;
+  transition: .2s all;
+}
+
+.ql-container .ql-editor.ql-blank:focus {
+  border-radius: .3rem;
+  background: var(--bg-lighter);
+}
+
+.MuiFormControl-root {
+  margin: 0 !important;
 
 }
+
+.MuiInputBase-root {
+  /* height: 40px !important; */
+}
+
+.MuiFormLabel-root {}
+
+/* Media queries */
+
+@media screen and (max-width:1536px) {}
 
 @media screen and (max-width:1280px) {
 
   .wrapper {
-    max-width: 80%;
+    max-width: 85%;
+    padding: 0 10px;
   }
-
 }
 
 @media screen and (max-width:1024px) {
 
   html {
     font-size: 95%;
-  }
-
-  .wrapper {
-    max-width: 85%;
-    padding: 0 10px;
   }
 
 }
@@ -101,4 +127,7 @@ a {
     max-width: 95%;
   }
 
+  .ql-container {
+    font-size: 20px !important;
+  }
 }

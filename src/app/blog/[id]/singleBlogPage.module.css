@@ -78,3 +78,30 @@
     object-fit: cover;
     border-radius: .4rem;
 }
+
+.Menu {
+    display: flex;
+    flex: 2;
+}
+
+@media screen and (max-width:1350px) {
+    .Menu {
+        flex: 3;
+    }
+}
+
+@media screen and (max-width:1250px) {
+    .Menu {
+        display: none;
+    }
+}
+
+@media screen and (max-width:640px) {
+    .imgContainer {
+        height: auto;
+        max-height: 400px !important;
+    }
+    .imgContainer img {
+        position: static !important;
+    }
+}

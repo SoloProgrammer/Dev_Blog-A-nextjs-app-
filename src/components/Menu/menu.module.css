@@ -79,6 +79,7 @@
 .title {
     color: var(--textColor);
     font-weight: 500;
+    font-size: .9rem;
 }
 
 .detail {
