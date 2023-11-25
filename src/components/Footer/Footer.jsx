@@ -10,6 +10,7 @@ const Footer = () => {
           <div className={styles.logoText}>Dev_Blog</div>
           <div className={styles.logoImg}>
             <Image
+              alt="alt"
               fill
               src={
                 "https://iconape.com/wp-content/png_logo_vector/google-web-dev-logo.png"

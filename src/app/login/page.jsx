@@ -5,9 +5,25 @@ import styles from "./loginPage.module.css";
 import Image from "next/image";
 import Commonbtn from "@/components/Commonbtn/Commonbtn";
 import { ThemeStates } from "@/context/ThemeContext";
+import { signIn, useSession } from "next-auth/react";
+import Loader from "@/components/Loader/Loader";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const { theme } = ThemeStates();
+  const { status } = useSession();
+  const router = useRouter();
+
+  if (status === "loading") {
+    return (
+      <div className="LoadingContainer">
+        <Loader size="medium" />
+      </div>
+    );
+  }
+  if (status === "authenticated") {
+    return router.push("/");
+  }
   return (
     <div className={`${styles.container}`}>
       <div className={styles.wrapper}>
@@ -20,21 +36,27 @@ const page = () => {
             <input type="password" id="password" required />
             <label htmlFor="password">Enter your password</label>
           </div>
-          <Commonbtn size="medium" text={"Sign in"} isAnimate={false}/>
+          <Commonbtn size="medium" text={"Sign in"} isAnimate={false} />
         </form>
         <div className={styles.crossline}>
           <span>OR</span>
         </div>
         <div className={styles.socialLinks}>
-          <div className={styles.socialLink}>
-            <div className={styles.imgContainer}>
-              <Image
-                src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
-                fill
-                alt="google_icon"
-              />
-            </div>
-            <span>Sign in with Google</span>
+          <div onClick={() => signIn("google")} className={styles.socialLink}>
+            {status === "loading" ? (
+              <Loader size="small" />
+            ) : (
+              <>
+                <div className={styles.imgContainer}>
+                  <Image
+                    src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
+                    fill
+                    alt="google_icon"
+                  />
+                </div>
+                <span>Sign in with Google</span>
+              </>
+            )}
           </div>
           <div
             className={`${styles.socialLink} ${

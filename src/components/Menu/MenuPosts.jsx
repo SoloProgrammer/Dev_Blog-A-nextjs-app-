@@ -9,7 +9,7 @@ const MenuPosts = ({ withImg }) => {
       <Link href={"/"} className={styles.item}>
         {withImg && (
           <div className={styles.imgContainer}>
-            <Image src={"/p1.jpg"} fill alt="blog_img" />
+            <Image src={"/p1.jpg"} priority={false}  fill alt="blog_img" />
           </div>
         )}
         <div className={styles.textContainer}>
@@ -26,7 +26,7 @@ const MenuPosts = ({ withImg }) => {
       <Link href={"/"} className={styles.item}>
         {withImg && (
           <div className={styles.imgContainer}>
-            <Image src={"/p1.jpg"} fill alt="blog_img" />
+            <Image src={"/p1.jpg"} priority={false}  fill alt="blog_img" />
           </div>
         )}
         <div className={styles.textContainer}>
@@ -43,7 +43,7 @@ const MenuPosts = ({ withImg }) => {
       <Link href={"/"} className={styles.item}>
         {withImg && (
           <div className={styles.imgContainer}>
-            <Image src={"/p1.jpg"} fill alt="blog_img" />
+            <Image src={"/p1.jpg"} priority={false}  fill alt="blog_img" />
           </div>
         )}
         <div className={styles.textContainer}>
@@ -60,7 +60,7 @@ const MenuPosts = ({ withImg }) => {
       <Link href={"/"} className={styles.item}>
         {withImg && (
           <div className={styles.imgContainer}>
-            <Image src={"/p1.jpg"} fill alt="blog_img" />
+            <Image src={"/p1.jpg"} priority={false}  fill alt="blog_img" />
           </div>
         )}
         <div className={styles.textContainer}>

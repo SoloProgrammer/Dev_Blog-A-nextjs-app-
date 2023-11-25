@@ -7,7 +7,7 @@ const SingleComment = () => {
     <div className={styles.container}>
         <div className={styles.userInfo}>
             <div className={styles.userAvatar}>
-                <Image src={"/p1.jpg"} fill alt='avatar'/>
+                <Image src={"/p1.jpg"} priority={false}  fill alt='avatar'/>
             </div>
             <div className={styles.userText}>
                 <span className={styles.userName}>John Doe</span>

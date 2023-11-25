@@ -2,11 +2,12 @@ import React from "react";
 import styles from "./authLinks.module.css";
 import Link from "next/link";
 import Commonbtn from "../Commonbtn/Commonbtn";
+import { signOut } from "next-auth/react";
 
 const AuthLinks = ({ status }) => {
   return (
     <>
-      {status === "notauthenticated" ? (
+      {status === "unauthenticated" ? (
         <>
           <Link href="/login">
             <Commonbtn text={"Login"} />
@@ -15,7 +16,7 @@ const AuthLinks = ({ status }) => {
       ) : (
         <>
           <Link href="/write">Write</Link>
-          <Commonbtn text={"Logout"} />
+          <Commonbtn handleFunc={signOut} text={"Logout"} />
         </>
       )}
     </>

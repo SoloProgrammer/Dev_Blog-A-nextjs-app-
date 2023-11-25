@@ -11,7 +11,7 @@ const SingleBlogPage = () => {
         <div className={styles.top}>
           <div className={styles.user}>
             <div className={styles.userImg}>
-              <Image src={"/p1.jpg"} fill alt="post_Img" />
+              <Image src={"/p1.jpg"} priority={false}  fill alt="post_Img" />
             </div>
             <div className={styles.userText}>
               <span className={styles.userName}>John Doe</span>
@@ -21,7 +21,7 @@ const SingleBlogPage = () => {
           <span className="material-symbols-outlined">bookmark_add</span>
         </div>
         <div className={styles.imgContainer}>
-          <Image src={"/p1.jpg"} fill alt="post_Img" />
+          <Image src={"/p1.jpg"} priority={false}  fill alt="post_Img" />
         </div>
         <div className={styles.textContainer}>
           <h1 className={styles.title}>

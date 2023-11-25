@@ -1,4 +1,6 @@
-function returnIconSpan(iconName, classes, handleFunc) {
+export const defaultFunc = () => {};
+
+function returnIconSpan(iconName, classes, handleFunc = defaultFunc) {
   return (
     <span
       onClick={handleFunc}
@@ -9,16 +11,14 @@ function returnIconSpan(iconName, classes, handleFunc) {
   );
 }
 
-const defaultFunc = () => {};
-
 export const ImageIcon = ({ classes, handleFunc }) =>
   returnIconSpan("image", classes, handleFunc);
 
-export const UploadIcon = ({ classes, handleFunc = defaultFunc }) =>
+export const UploadIcon = ({ classes, handleFunc }) =>
   returnIconSpan("upload", classes);
 
-export const VideoIcon = ({ classes, handleFunc = defaultFunc }) =>
+export const VideoIcon = ({ classes, handleFunc }) =>
   returnIconSpan("smart_display", classes);
 
-export const XMarkIcon = ({ classes = [], handleFunc = defaultFunc }) =>
-  returnIconSpan("close", classes);
+export const XMarkIcon = ({ classes = [], handleFunc }) =>
+  returnIconSpan("close", classes, handleFunc);

@@ -22,6 +22,10 @@
     display: none;
 }
 
+.catText{
+    text-transform: capitalize;
+}
+
 .category {
     border: 1px solid white;
     min-width: 167px;
@@ -41,7 +45,7 @@
     object-fit: cover;
 }
 
-.category.style {
+.category.news {
     background-color: #57c4ff4c;
     --shadowColor: #57c4ff7b;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styles from "./imageDropZone.module.css";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
@@ -8,8 +8,9 @@ import { ThemeStates } from "@/context/ThemeContext";
 import { handleFileUpload } from "@/utils/upload";
 import Loader from "../Loader/Loader";
 import Commonbtn from "../Commonbtn/Commonbtn";
+import { defaultFunc } from "@/GoogleIcons/Icons";
 
-const ImageDropZone = () => {
+const ImageDropZone = ({ handleSetImg, hideImgDropZone = defaultFunc }) => {
   const { theme } = ThemeStates();
   const [loading, setLoading] = useState(false);
   const [img, setImg] = useState(null);
@@ -24,8 +25,9 @@ const ImageDropZone = () => {
     };
     const picture = await handleFileUpload(e, setLoading);
     picture && setImg({ url: picture, name: acceptedFiles[0].name });
-    handleSetImgName(img.name)
+    handleSetImg({ url: picture, name: acceptedFiles[0].name });
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
     <div className={styles.container}>
@@ -35,9 +37,11 @@ const ImageDropZone = () => {
           <Loader />
         ) : (
           <>
-            {!img && !loading && (
-              <input {...getInputProps()} multiple={false} />
-            )}
+            <input
+              style={{ display: !img && !loading ? "block" : "none" }}
+              {...getInputProps()}
+              multiple={false}
+            />
             {!img && !loading ? (
               <>
                 <div className={styles.imgdropZone}>
@@ -64,8 +68,7 @@ const ImageDropZone = () => {
               !loading && (
                 <>
                   <div className={styles.imgViewBox}>
-                    {/* <Image fill alt="blog_img" src={img}/> */}
-                    <img src={img.url} alt="img" />
+                    <Image fill alt="blog_img" src={img.url} />
                   </div>
                 </>
               )
@@ -75,8 +78,11 @@ const ImageDropZone = () => {
       </div>
       {img && !loading && (
         <div className={styles.actions}>
-          <Commonbtn size="small" text={"Change"} />
-          <Commonbtn size="small" text={"Continue"} />
+          <Commonbtn
+            size="small"
+            text={"Continue"}
+            handleFunc={hideImgDropZone}
+          />
         </div>
       )}
     </div>

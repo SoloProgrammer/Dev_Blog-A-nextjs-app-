@@ -9,7 +9,7 @@ const BlogCard = () => {
   return (
     <div className={styles.post}>
       <div className={styles.imgContainer}>
-        <Image src={"/p1.jpg"} fill />
+        <Image src={"/p1.jpg"} priority={false}  fill alt="alt"/>
       </div>
       <div className={styles.postTextContent}>
         <div className={styles.details}>

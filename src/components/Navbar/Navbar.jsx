@@ -5,13 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import AuthLinks from "../AuthLinks/AuthLinks";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [hide, setHide] = useState(true);
+  const { data, status } = useSession();
   function toggleSideBar() {
     setHide((prev) => !prev);
   }
-  const status = "authenticated";
 
   return (
     <div className={styles.container}>
@@ -23,6 +24,7 @@ const Navbar = () => {
             src={
               "https://iconape.com/wp-content/png_logo_vector/google-web-dev-logo.png"
             }
+            alt="alt"
           />
         </div>
       </Link>
@@ -42,18 +44,18 @@ const Navbar = () => {
         <div onClick={toggleSideBar} className={styles.menuIcon}>
           <span className="material-symbols-outlined">menu</span>
         </div>
-        <Image
-          className={styles.userIcon}
-          style={{
-            display: status === "notauthenticated" ? "none" : "block",
-          }}
-          src={
-            "https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/profile_user.jpg"
-          }
-          width={35}
-          height={35}
-          alt="default_user"
-        />
+        {status === "authenticated" && (
+          <Image
+            className={styles.userIcon}
+            style={{
+              display: status === "notauthenticated" ? "none" : "block",
+            }}
+            src={data?.user?.image}
+            width={35}
+            height={35}
+            alt="default_user"
+          />
+        )}
       </div>
     </div>
   );

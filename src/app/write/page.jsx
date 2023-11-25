@@ -5,15 +5,28 @@ import styles from "./writePage.module.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { ThemeStates } from "@/context/ThemeContext";
-import { ImageIcon, UploadIcon, VideoIcon, XMarkIcon } from "@/GoogleIcons/Icons";
+import {
+  ImageIcon,
+  UploadIcon,
+  VideoIcon,
+  XMarkIcon,
+} from "@/GoogleIcons/Icons";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Modal from "@/components/Modal/Modal";
 import ImageDropZone from "@/components/ImageDropZone/ImageDropZone";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader/Loader";
 
 const Writepage = () => {
   const [value, setValue] = useState("");
   const [title, setTile] = useState("");
   const { theme } = ThemeStates();
+
+  const { status } = useSession();
+
+  const router = useRouter();
+
   const emptyData = "<p><br></p>";
   const handleValueChange = (e) => {
     e !== emptyData ? setValue(e) : setValue(null);
@@ -22,14 +35,30 @@ const Writepage = () => {
   const [showImgDropZone, setShowImgDropZone] = useState(false);
 
   const [age, setAge] = useState("");
-  const [imgName, setImgName] = useState("");
+  const [img, setImg] = useState("");
   const handleChange = () => {};
   const openImageDropZone = () => {
     setShowImgDropZone(true);
   };
-  const handleSetImgName = (name) => {
-    setImgName(name);
+  const handleSetImg = (imgObj) => {
+    setImg(imgObj);
   };
+  const removeImg = () => setImg("");
+
+  const hideImgDropZone = () => {
+    setShowImgDropZone(false);
+  };
+
+  if(status === "loading"){
+    return <div className="LoadingContainer">
+      <Loader size="medium"/>
+    </div>
+  }
+
+  if (status === "unauthenticated") {
+    return router.push("/");
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -84,10 +113,12 @@ const Writepage = () => {
             </button>
           </div>
         </div>
-        {!imgName && (
-          <div className={`${styles.imgName} ${theme === 'dark' && styles.dark}`}>
-            <span>xyzabiub.jpg</span>
-            <XMarkIcon classes={[styles.xmark]}/>
+        {img && (
+          <div
+            className={`${styles.imgName} ${theme === "dark" && styles.dark}`}
+          >
+            <span>{img.name}</span>
+            <XMarkIcon classes={[styles.xmark]} handleFunc={removeImg} />
           </div>
         )}
         <div className={styles.editor}>
@@ -102,7 +133,10 @@ const Writepage = () => {
       </div>
       {showImgDropZone && (
         <Modal setShowImgDropZone={setShowImgDropZone}>
-          <ImageDropZone handleSetImgName={handleSetImgName} />
+          <ImageDropZone
+            handleSetImg={handleSetImg}
+            hideImgDropZone={hideImgDropZone}
+          />
         </Modal>
       )}
     </div>

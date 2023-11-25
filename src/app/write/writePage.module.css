@@ -72,7 +72,7 @@
     background: var(--bg-lighter);
 }
 
-.right{
+.right {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -106,51 +106,59 @@
     background: rgba(255, 255, 255, .2);
 }
 
-.editor{
+.editor {
     display: flex;
     gap: 20px;
 }
+
 .quillTextArea {
     min-height: 300px;
     max-height: 500px;
     flex: 4;
 }
 
-.imageDropBox{
+.imageDropBox {
     flex: 2;
     padding: 10px;
     /* border: 1px solid var(--softTextColor); */
 }
-.imgName{
+
+.imgName {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     border: 1px solid green;
     background: #00eb0045;
     width: fit-content;
     border-radius: .9rem;
-    font-size: .8rem;
+    font-size: .85rem;
     padding: 0 5px;
     color: var(--softTextColor);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     align-items: center;
+    padding-right: 4px;
+    color: var(--successTextColor);
+    background: var(--successBgColor);
+    transition: .2 all;
 }
-.xmark{
-    font-size: .8rem;
+
+
+.xmark {
+    font-size: .7rem;
     cursor: pointer;
     border-radius: 50%;
-    box-shadow: 0 0 0 1px #000;
+    box-shadow: 0 0 0 1px var(--successTextColor);
 }
-.imgName.dark .xmark{
-    box-shadow: 0 0 0 1px #fff;
-}
+
 @media screen and (max-width:800px) {
     .wrapper {
         padding: 0px 0px;
     }
-    .editor{
+
+    .editor {
         flex-direction: column-reverse;
     }
-    .imageDropBox{
+
+    .imageDropBox {
         flex: auto;
     }
 
@@ -182,10 +190,12 @@
     .plus_icon {
         font-size: 35px;
     }
-    .extraTools.active{
+
+    .extraTools.active {
         left: 48px;
     }
-    .extraTools{
+
+    .extraTools {
         gap: 15px;
     }
 }

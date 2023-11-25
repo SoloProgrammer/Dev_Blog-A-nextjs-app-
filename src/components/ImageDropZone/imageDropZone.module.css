@@ -48,6 +48,7 @@
 
 .imgViewBox {
     position: relative;
+    width: 100%;
 }
 
 .imgViewBox img {
@@ -57,7 +58,8 @@
     max-height: 30rem;
     position: static !important;
 }
-.actions{
+
+.actions {
     margin-top: 20px;
     display: flex;
     justify-content: end;
@@ -66,6 +68,7 @@
 
 @media screen and (max-width:760px) {
     .container {
-        max-width: 100%;
+        min-width: 100%;
+        width: 100%;
     }
 }

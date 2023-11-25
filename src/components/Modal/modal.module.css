@@ -10,7 +10,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    transition: .2s all;
+    transition: .2s opacity;
     opacity: 0;
     pointer-events: none;
 
@@ -39,6 +39,6 @@
 
 @media screen and (max-width:640px) {
     .inner {
-        max-width: 97% !important;
+        width: 97% !important;
     }
 }

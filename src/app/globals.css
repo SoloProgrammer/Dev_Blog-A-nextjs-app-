@@ -9,6 +9,38 @@
   --main-color: #7058ff;
 }
 
+.dark {
+  --bg: #0f172a;
+  --textColor: #ddd;
+  --softBg: #1f273a;
+  --shadow-light: 0 0 5px var(--bg-light);
+  --bg-lighter: rgba(255, 255, 255, .025);
+  --bg-light: rgba(255, 255, 255, .1);
+  --softTextColor: #a6a6a6;
+  --successTextColor: #7EE2B8;
+  --successBgColor: #1C3329;
+}
+
+
+.LoadingContainer {
+  min-height: 70dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.light {
+  --bg: white;
+  --textColor: rgb(14, 14, 14);
+  --softBg: #f0f0f0;
+  --shadow-light: 0 0 5px rgba(0, 0, 0, .2);
+  --bg-light: rgba(0, 0, 0, .025);
+  --softTextColor: #626262;
+  --successTextColor: #216E4E;
+  --successBgColor: #DCFFF1;
+}
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -24,25 +56,6 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-.dark {
-  --bg: #0f172a;
-  --textColor: #ddd;
-  --softBg: #1f273a;
-  --shadow-light: 0 0 5px var(--bg-light);
-  --bg-lighter: rgba(255, 255, 255, .025);
-  --bg-light: rgba(255, 255, 255, .1);
-  --softTextColor: #a6a6a6;
-}
-
-.light {
-  --bg: white;
-  --textColor: rgb(14, 14, 14);
-  --softBg: #f0f0f0;
-  --shadow-light: 0 0 5px rgba(0, 0, 0, .2);
-  --bg-light: rgba(0, 0, 0, .025);
-  --softTextColor: #626262;
 }
 
 .container {
@@ -87,14 +100,6 @@ a {
   margin: 0 !important;
 
 }
-
-.MuiInputBase-root {
-  /* height: 40px !important; */
-}
-
-.MuiFormLabel-root {}
-
-/* Media queries */
 
 @media screen and (max-width:1536px) {}
 
