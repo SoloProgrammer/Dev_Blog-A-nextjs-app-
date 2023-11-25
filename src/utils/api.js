@@ -5,11 +5,11 @@ export const server = {
 }
 
 export const api = {
-    categories: (params, query) => {
+    getCategories: () => {
         return `${server.URL.local}/api/categories`
     },
-    posts: (params, query) => {
-        return `${server.URL.local}/api/posts`
+    getPosts: (query) => {
+        return `${server.URL.local}/api/posts${query}`
     },
 }
 

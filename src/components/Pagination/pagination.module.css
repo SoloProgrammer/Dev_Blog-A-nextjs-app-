@@ -13,11 +13,18 @@
     padding: 10px 30px;
     font-size: .8rem;
     display: flex;
+    border: none;
     align-items: center;
     gap: 5px;
     position: relative;
     overflow: hidden;
     transition: .5s all;
+}
+
+.btn:disabled{
+    background: var(--softBg);
+    color: var(--textColor);
+    cursor: not-allowed;
 }
 
 .btn::after {
@@ -34,7 +41,14 @@
 .btn:hover{
     border-radius: .5rem;
 }
+.btn:disabled:hover{
+    border-radius: 0rem;
+}
 .btn:hover::after {
     left: 180%;
     transform-origin: bottom left;
+}
+.btn:disabled:hover::after{
+    /* left: ; */
+    display: none;
 }

@@ -36,7 +36,7 @@
     color: var(--textColor);
     border-radius: .8rem;
     padding: 15px 20px;
-    border: 2px solid var(--shadowColor);
+    border: 2px solid var(--borderColor);
     gap: 10px;
 }
 
@@ -47,32 +47,32 @@
 
 .category.news {
     background-color: #57c4ff4c;
-    --shadowColor: #57c4ff7b;
+    --borderColor: #57c4ff7b;
 }
 
 .category.fashion {
     background-color: #da85c853;
-    --shadowColor: #da85c868;
+    --borderColor: #da85c868;
 }
 
 .category.food {
     background-color: #7fb8814c;
-    --shadowColor: #7fb8817c;
+    --borderColor: #7fb8817c;
 }
 
 .category.travel {
     background-color: #ff79574a;
-    --shadowColor: #ff795773;
+    --borderColor: #ff795773;
 }
 
 .category.culture {
     background-color: #ffb04f50;
-    --shadowColor: #ffb04f76;
+    --borderColor: #ffb04f76;
 }
 
 .category.coding {
     background-color: #5e4fff4f;
-    --shadowColor: #5e4fff81;
+    --borderColor: #5e4fff81;
 }
 
 @media screen and (max-width:768px) {

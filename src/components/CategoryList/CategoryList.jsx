@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 
 const getData = async () => {
   console.log("get data");
-  const res = await fetch(api.categories(), { cache: "no-store" });
+  const res = await fetch(api.getCategories(), { cache: "no-store" });
   if (!res.ok) {
     throw new Error("Failed!");
   }
@@ -25,7 +25,7 @@ const CategoryList = async () => {
           return (
             <Link
               key={category._id}
-              href={"/blog?category=news"}
+              href={`/blog?category=${category.slug}`}
               className={`${styles.category} ${styles[category.slug]}`}
             >
               {category.img && (

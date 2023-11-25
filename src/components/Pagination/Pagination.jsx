@@ -1,17 +1,44 @@
+"use client";
+
 import React from "react";
 import styles from "./pagination.module.css";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const Pagination = () => {
+const Pagination = ({ page, hasPrev, hasNext }) => {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
+
+  const routeToPush = categoryParam ? `&category=${categoryParam}` : "";
+
+  const router = useRouter();
   return (
     <div className={styles.pagination}>
-      <div className={`${styles.prevBtn} ${styles.btn}`}>
-        <span style={{fontSize:'.9rem'}} className="material-symbols-outlined ">arrow_back_ios</span>
+      <button
+        disabled={!hasPrev}
+        onClick={() => router.push(`?page=${--page}${routeToPush}`)}
+        className={`${styles.prevBtn} ${styles.btn}`}
+      >
+        <span
+          style={{ fontSize: ".9rem" }}
+          className="material-symbols-outlined "
+        >
+          arrow_back_ios
+        </span>
         Prev
-      </div>
-      <div className={`${styles.nextBtn} ${styles.btn}`}>
+      </button>
+      <button
+        disabled={!hasNext}
+        onClick={() => router.push(`?page=${++page}${routeToPush}`)}
+        className={`${styles.nextBtn} ${styles.btn}`}
+      >
         Next
-        <span style={{fontSize:'.9rem'}} className="material-symbols-outlined ">arrow_forward_ios</span>
-      </div>
+        <span
+          style={{ fontSize: ".9rem" }}
+          className="material-symbols-outlined "
+        >
+          arrow_forward_ios
+        </span>
+      </button>
     </div>
   );
 };

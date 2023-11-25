@@ -16,6 +16,7 @@
 .cat{
     color: rgb(193, 26, 26);
     font-weight: 500;
+    text-transform: uppercase;
 }
 .details {
     font-size: .9rem;
@@ -27,6 +28,7 @@
     color: var(--softTextColor);
     font-size: .8rem;
 }
+
 
 .postTextContent {
     display: flex;
@@ -46,6 +48,7 @@
 @media screen and (max-width:1100px) {
     .post{
         flex-direction: column;
+        align-items: flex-start;
     }
     .imgContainer{
         height: 200px;
