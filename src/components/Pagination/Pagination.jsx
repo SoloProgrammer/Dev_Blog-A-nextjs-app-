@@ -8,14 +8,14 @@ const Pagination = ({ page, hasPrev, hasNext }) => {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
 
-  const routeToPush = categoryParam ? `&category=${categoryParam}` : "";
+  const extraParam = categoryParam ? `&category=${categoryParam}` : "";
 
   const router = useRouter();
   return (
     <div className={styles.pagination}>
       <button
         disabled={!hasPrev}
-        onClick={() => router.push(`?page=${--page}${routeToPush}`)}
+        onClick={() => router.push(`?page=${--page}${extraParam}`)}
         className={`${styles.prevBtn} ${styles.btn}`}
       >
         <span
@@ -28,7 +28,7 @@ const Pagination = ({ page, hasPrev, hasNext }) => {
       </button>
       <button
         disabled={!hasNext}
-        onClick={() => router.push(`?page=${++page}${routeToPush}`)}
+        onClick={() => router.push(`?page=${++page}${extraParam}`)}
         className={`${styles.nextBtn} ${styles.btn}`}
       >
         Next

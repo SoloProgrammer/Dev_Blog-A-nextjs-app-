@@ -25,7 +25,7 @@ const CategoryList = async () => {
           return (
             <Link
               key={category._id}
-              href={`/blog?category=${category.slug}`}
+              href={`/posts?category=${category.slug}`}
               className={`${styles.category} ${styles[category.slug]}`}
             >
               {category.img && (

@@ -19,11 +19,11 @@ const BlogList = async ({ page, category = "" }) => {
   const POSTS_PER_PAGE = 4;
   let maxPage = Math.ceil(postsCount / POSTS_PER_PAGE) || 1;
 
-  let hasPrev = (page > 1) && (page <= maxPage);
+  let hasPrev = page > 1 && page <= maxPage;
   let hasNext = page * POSTS_PER_PAGE < postsCount;
 
   return (
-    <PageProvider page={page} maxPage={maxPage} >
+    <PageProvider page={page} maxPage={maxPage}>
       <div className={styles.container}>
         <h1 className={styles.title}>Recent Posts</h1>
         <div className={styles.posts}>

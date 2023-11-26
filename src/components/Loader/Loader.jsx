@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./loader.module.css";
 
-const Loader = ({ size = "large" }) => {
+const Loader = ({ size = "large", customSize }) => {
   let sizes = {
     small: "30px",
     medium: "40px",
@@ -9,7 +9,7 @@ const Loader = ({ size = "large" }) => {
   };
   return (
     <span
-      style={{ width: sizes[size], height: sizes[size] }}
+      style={{ width: size ? sizes[size] : customSize, height: sizes[size] }}
       className={styles.loader}
     ></span>
   );

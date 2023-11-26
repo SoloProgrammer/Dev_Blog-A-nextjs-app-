@@ -10,7 +10,7 @@ const CategoryPage = ({ searchParams }) => {
     <div className={`${styles.container}`}>
       <h1 className={`${styles.title} ${styles.category} ${styles[category]}`}>Blog/{category}</h1>
       <div className={styles.content}>
-        <BlogList page={page} category={category}/>
+        <BlogList key={`${category}BlogList`} page={page} category={category}/>
         <Menu />
       </div>
     </div>

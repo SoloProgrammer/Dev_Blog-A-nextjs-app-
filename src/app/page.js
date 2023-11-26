@@ -12,7 +12,7 @@ const Home = ({ searchParams }) => {
         <Featured />
         <CategoryList />
         <div className={styles.content}>
-          <BlogList page={page} />
+          <BlogList page={page} key={'allblogsList'}/>
           <Menu />
         </div>
       </div>

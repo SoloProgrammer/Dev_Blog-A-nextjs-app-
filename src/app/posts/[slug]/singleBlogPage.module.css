@@ -75,7 +75,7 @@
 }
 
 .imgContainer img {
-    object-fit: cover;
+    object-fit: contain;
     border-radius: .4rem;
 }
 

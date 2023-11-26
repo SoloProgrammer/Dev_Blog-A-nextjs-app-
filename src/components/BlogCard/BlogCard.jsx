@@ -4,7 +4,7 @@ import Image from "next/image";
 import Commonbtn from "../Commonbtn/Commonbtn";
 import Link from "next/link";
 
-const BlogCard = ({ post, key }) => {
+const BlogCard = ({ post}) => {
   const icon = (
     <span style={{ fontSize: ".9rem" }} className="material-symbols-outlined">
       arrow_forward
@@ -12,12 +12,12 @@ const BlogCard = ({ post, key }) => {
   );
 
   function getTrimmedPostDesc(desc) {
-    let descLen = desc.length
-    return `${desc.slice(0, 210)} ${descLen > 210 ? " ..." : ""}`;
+    const DESC_LEN = desc.length
+    return `${desc.slice(0, 210)} ${DESC_LEN > 210 ? " ..." : ""}`;
   }
 
   return (
-    <div key={key} className={styles.post}>
+    <div className={styles.post}>
       <div className={styles.imgContainer}>
         <Image src={post.img} priority={false} fill alt="alt" />
       </div>
@@ -31,7 +31,7 @@ const BlogCard = ({ post, key }) => {
           className={styles.postDesc}
           dangerouslySetInnerHTML={{ __html: getTrimmedPostDesc(post.desc) }}
         ></p>
-        <Link href={"/blog/1234"}>
+        <Link href={`/posts/${post.slug}`}>
           <Commonbtn text={"Read more"} size="small" icon={icon} />
         </Link>
       </div>
