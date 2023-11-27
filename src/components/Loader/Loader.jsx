@@ -1,17 +1,18 @@
 import React from "react";
 import styles from "./loader.module.css";
 
-const Loader = ({ size = "large", customSize }) => {
+const Loader = ({ size = "large" }) => {
   let sizes = {
+    mini: "20px",
     small: "30px",
     medium: "40px",
     large: "48px",
   };
   return (
-    <span
-      style={{ width: size ? sizes[size] : customSize, height: sizes[size] }}
+    <div
+      style={{ width: sizes[size], height: sizes[size], borderWidth: size === 'mini' ? '3px' : '5px' }}
       className={styles.loader}
-    ></span>
+    ></div>
   );
 };
 

@@ -1,14 +1,16 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.seperator{
+
+.seperator {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.actions{
+
+.actions {
     transition: all .2s;
     display: flex;
     gap: 5px;
@@ -16,14 +18,17 @@
     pointer-events: none;
     cursor: pointer;
 }
-.actions span:active{
+
+.actions span:active {
     transform: scale(.85);
 }
-.container:hover .actions{
+
+.container:hover .actions {
     opacity: 1.1;
     pointer-events: all;
 }
-.actions span{
+
+.actions span {
     font-size: 1rem;
     color: var(--softTextColor);
     background: var(--softBg);
@@ -32,44 +37,93 @@
     user-select: none;
     transition: all .2s;
 }
-.actions span:hover{
+
+.actions span:hover {
     background: var(--bg-light);
 }
-.userInfo{
+
+.userInfo {
     display: flex;
     gap: 10px;
     align-items: center;
 }
-.userAvatar{
-   position: relative;
-   width: 40px;
-   height: 40px;
+
+.userAvatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
 }
-.userAvatar img{
+
+.userAvatar img {
     object-fit: cover;
     border-radius: 50%;
 }
-.userText{
+
+.userText {
     display: flex;
     flex-direction: column;
     gap: 1px;
 }
-.userName{
+
+.userName {
     font-weight: 500;
     font-size: .95rem;
     cursor: pointer;
 }
-.date{
+
+.date {
     font-size: .75rem;
     color: var(--softTextColor);
 }
-.commentText{
-    padding-left: 3rem;
+
+.commentText {
+    margin-left: 3rem;
+}
+
+.editCommentArea {
+    background: transparent;
+    border: none;
+    box-shadow: 0 0 0 1px var(--softTextColor);
+    transition: background .2s, font-size .2s;
+    outline: none;
+    font-size: 1rem;
+    margin-left: 3rem;
+    color: var(--textColor);
+    padding: 5px;
+    resize: none;
+    height: fit-content !important;
+}
+
+.editCommentArea:focus {
+    background: var(--bg-light);
+}
+
+.editCommentArea::-webkit-scrollbar {
+    display: none;
+}
+
+.editActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.editActions span {
+    padding: 3px;
+    border-radius: .2rem;
+    background: rgba(0, 0, 0, .1);
+    border: 1px solid var(--bg-light);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.editActions span:hover {
+    background: var(--bg-light);
 }
 
 @media screen and (max-width:768px) {
-.actions{
-    opacity: 1;
-    pointer-events: all;
-}
+    .actions {
+        opacity: 1;
+        pointer-events: all;
+    }
 }

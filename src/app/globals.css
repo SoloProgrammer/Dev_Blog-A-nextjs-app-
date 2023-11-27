@@ -34,7 +34,7 @@
   --textColor: rgb(14, 14, 14);
   --softBg: #f0f0f0;
   --shadow-light: 0 0 5px rgba(0, 0, 0, .2);
-  --bg-light: rgba(0, 0, 0, .025);
+  --bg-light: rgba(0, 0, 0, .05);
   --softTextColor: #626262;
   --successTextColor: #216E4E;
   --successBgColor: #DCFFF1;

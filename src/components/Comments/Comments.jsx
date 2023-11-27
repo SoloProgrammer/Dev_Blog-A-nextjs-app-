@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import styles from "./comments.module.css";
 import SingleComment from "./SingleComment/SingleComment";
 import Commonbtn from "../Commonbtn/Commonbtn";
@@ -96,7 +97,12 @@ const Comments = ({ postSlug }) => {
       <div className={styles.commentsList}>
         {data?.comments?.map((comment) => {
           return (
-            <SingleComment mutate={mutate} comment={comment} key={comment.id} />
+            <SingleComment
+              data={data}
+              mutate={mutate}
+              comment={comment}
+              key={comment.id}
+            />
           );
         })}
       </div>
