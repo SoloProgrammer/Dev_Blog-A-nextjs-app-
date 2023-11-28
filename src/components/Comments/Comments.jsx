@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./comments.module.css";
 import SingleComment from "./SingleComment/SingleComment";
 import Commonbtn from "../Commonbtn/Commonbtn";
@@ -26,11 +26,11 @@ const Comments = ({ postSlug }) => {
   const { status } = useSession();
 
   const query = `?postSlug=${postSlug}`;
+
   const { data, mutate, isLoading } = useSWR(
     api.getPostComments(query),
     fetcher
   );
-
   const postCommentIcon = (
     <span style={{ fontSize: ".85rem" }} className="material-symbols-outlined">
       send
@@ -44,14 +44,18 @@ const Comments = ({ postSlug }) => {
     if (!desc) return;
     setLoading(true);
     setDesc("");
-    await fetch(api.createNewComment(), {
+    const options = {
       method: "POST",
       body: JSON.stringify({ desc, postSlug }),
-    });
+    };
+    await fetch(api.createNewComment(), options);
     mutate();
     setLoading(false);
   };
 
+  const updateComments = (comments) => {
+    mutate({ ...data, comments });
+  };
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -98,8 +102,8 @@ const Comments = ({ postSlug }) => {
         {data?.comments?.map((comment) => {
           return (
             <SingleComment
-              data={data}
-              mutate={mutate}
+              comments={data.comments}
+              updateComments={updateComments}
               comment={comment}
               key={comment.id}
             />

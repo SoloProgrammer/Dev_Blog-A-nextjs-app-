@@ -1,16 +1,19 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styles from "./singleComment.module.css";
 import Image from "next/image";
 import { getFormattedPostDate } from "@/utils/date";
 import { api } from "@/utils/api";
 import Loader from "@/components/Loader/Loader";
 import TextareaAutosize from "react-textarea-autosize";
+import { useSelector } from "react-redux";
 
-const SingleComment = ({ comment, data, mutate }) => {
+const SingleComment = ({ comment, comments, updateComments }) => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(comment.desc);
   const [edit, setEdit] = useState(false);
+
+  const { user } = useSelector((state) => state.auth);
 
   const handleDelete = async (id) => {
     setLoading(true);
@@ -18,22 +21,32 @@ const SingleComment = ({ comment, data, mutate }) => {
     await fetch(api.deleteComment(query), {
       method: "DELETE",
     });
-    let updatedComments = data.comments.filter((c) => c.id !== comment.id);
-    mutate({ ...data, comments: updatedComments });
+    let updatedComments = comments.filter((c) => c.id !== comment.id);
+    updateComments(updatedComments);
     setLoading(false);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let trimedValue = value.replaceAll(/\s+/g, " ").trim();
     setValue(trimedValue);
     if (trimedValue !== comment.desc) {
-      let updatedComments = data.comments.map((c) => {
+      let updatedComments = comments.map((c) => {
         if (c.id === comment.id) {
           c.desc = trimedValue;
         }
         return c;
       });
-      mutate({ ...data, comments: updatedComments });
+
+      setEdit(false);
+
+      // updating commnets on server
+      let options = {
+        method: "PUT",
+        body: JSON.stringify({ desc: trimedValue }),
+      };
+      let query = `?id=${comment.id}`;
+      await fetch(api.updateComment(query), options);
+      updateComments(updatedComments);
     }
     setEdit(false);
   };
@@ -57,24 +70,26 @@ const SingleComment = ({ comment, data, mutate }) => {
             </span>
           </div>
         </div>
-        <div className={styles.actions}>
-          {loading ? (
-            <Loader size="mini" />
-          ) : (
+        {comment.user.id === user?.id && (
+          <div className={styles.actions}>
+            {loading ? (
+              <Loader size="mini" />
+            ) : (
+              <span
+                onClick={() => handleDelete(comment.id)}
+                className="material-symbols-outlined"
+              >
+                delete
+              </span>
+            )}
             <span
-              onClick={() => handleDelete(comment.id)}
+              onClick={() => setEdit(true)}
               className="material-symbols-outlined"
             >
-              delete
+              edit_square
             </span>
-          )}
-          <span
-            onClick={() => setEdit(true)}
-            className="material-symbols-outlined"
-          >
-            edit_square
-          </span>
-        </div>
+          </div>
+        )}
       </div>
       {!edit && <p className={styles.commentText}>{comment.desc}</p>}
       {edit && (

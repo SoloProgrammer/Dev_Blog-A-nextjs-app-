@@ -14,6 +14,9 @@ export const api = {
     getSinglePost: (slug) => {
         return `${server.URL.local}/api/posts/${slug}`
     },
+    savePost: (slug) => {
+        return `${server.URL.local}/api/posts/${slug}/save`
+    },
     getPostComments: (query) => {
         return `${server.URL.local}/api/comments${query}`
     },
@@ -22,6 +25,12 @@ export const api = {
     },
     deleteComment: (query) => {
         return `${server.URL.local}/api/comments${query}`
+    },
+    updateComment: (query) => {
+        return `${server.URL.local}/api/comments${query}`
+    },
+    getUser:()=>{
+        return `${server.URL.local}/api/user`
     }
 }
 

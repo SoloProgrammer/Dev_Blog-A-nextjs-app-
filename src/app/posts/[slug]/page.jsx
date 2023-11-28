@@ -5,6 +5,7 @@ import styles from "./singleBlogPage.module.css";
 import Comments from "@/components/Comments/Comments";
 import { api } from "@/utils/api";
 import { getFormattedPostDate } from "@/utils/date";
+import SavePostIcon from "@/components/SavePostIcon/SavePostIcon";
 
 const getSinglePost = async (slug) => {
   const res = await fetch(api.getSinglePost(slug), { cache: "no-cache" });
@@ -37,7 +38,7 @@ const SingleBlogPage = async ({ params }) => {
               </span>
             </div>
           </div>
-          <span className="material-symbols-outlined">bookmark_add</span>
+          <SavePostIcon slug={slug} postId={post.id} />
         </div>
         <div className={styles.imgContainer}>
           <Image src={post.img} priority={false} fill alt="post_Img" />

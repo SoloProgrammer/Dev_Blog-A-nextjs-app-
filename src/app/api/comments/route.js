@@ -54,9 +54,15 @@ export const POST = async (req) => {
 
 export const DELETE = async (req) => {
 
+    const session = await getAuthSession()
+
+    if (!session) {
+        return new NextResponse(JSON.stringify({ message: 'Not Authenticated', status: 401 }));
+    }
+
     const { searchParams } = new URL(req.url)
     const id = searchParams.get('id')
-    
+
     if (!id) Response("Comment Id not passed with params!", 405, false, true)
     try {
         await prisma.Comment.delete({
@@ -69,3 +75,30 @@ export const DELETE = async (req) => {
     }
 
 }
+
+// UPDATE A COMMENT
+
+export const PUT = async (req) => {
+
+    // Authenticate user sessions on server side
+    const session = await getAuthSession()
+
+    if (!session) {
+        return new NextResponse(JSON.stringify({ message: 'Not Authenticated', status: 401 }));
+    }
+
+    try {
+        const body = await req.json()
+        const { searchParams } = new URL(req.url)
+        const id = searchParams.get('id')
+
+        await prisma.Comment.update({
+            where: { id },
+            data: { ...body }
+        })
+
+        return Response("Your Comment is updated", 200, true, false);
+    } catch (error) {
+        return Response("Something went wrong!", 500, false, error)
+    }
+};
