@@ -9,7 +9,9 @@ export const GET = async (req) => {
     const postSlug = searchParams.get("postSlug");
     const query = {
         where: { ...(postSlug && { postSlug }) },
-        include: { user: true },
+        include: {
+            user: true
+        },
     }
     try {
         const [comments, count] = await prisma.$transaction([

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    user: null
+    user: null,
+    loading: true
 }
 
 const auth = createSlice({
@@ -16,9 +17,12 @@ const auth = createSlice({
         },
         unSavePost: (state, { payload }) => {
             state.user.savedPosts = state.user.savedPosts.filter(pid => pid !== payload.postId)
+        },
+        setLoading: (state, { payload }) => {
+            state.loading = payload
         }
     }
 })
 
-export const { addUser, savePost, unSavePost } = auth.actions
+export const { addUser, savePost, unSavePost, setLoading } = auth.actions
 export default auth.reducer

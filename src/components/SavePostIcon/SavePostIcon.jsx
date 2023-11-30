@@ -4,19 +4,26 @@ import { savePost, unSavePost } from "@/redux/slices/authSlice";
 import { api } from "@/utils/api";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Styles from './saveposticon.module.css'
+import Styles from "./saveposticon.module.css";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SavePostIcon = ({ slug, postId }) => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const router = useRouter();
+  function toggleFill(target){
+    target.innerText = target.innerText === "bookmark_add" ? "bookmark_added" : "bookmark_add";
+    target.classList.toggle("fill");
+  }
   const hanldeSavePost = async (e) => {
+    if (!user) return router.push("/login");
+
     if (e.target.classList.contains("fill")) {
-      e.target.innerText = "bookmark_add";
-      e.target.classList.remove("fill");
+      toggleFill(e.target)
       dispatch(unSavePost({ postId }));
     } else {
-      e.target.innerText = "bookmark_added";
-      e.target.classList.add("fill");
+      toggleFill(e.target)
       dispatch(savePost({ postId }));
     }
     const options = {
@@ -25,10 +32,18 @@ const SavePostIcon = ({ slug, postId }) => {
     await fetch(api.savePost(slug), options);
   };
 
-  if (!user) return;
+  if (loading) return;
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "2px",
+      }}
+    >
       <span
         onClick={hanldeSavePost}
         className={`${Styles.saveIcon} material-symbols-outlined ${
@@ -37,6 +52,11 @@ const SavePostIcon = ({ slug, postId }) => {
       >
         {user?.savedPosts.includes(postId) ? "bookmark_added" : "bookmark_add"}
       </span>
+      {!user && !loading && (
+        <Link href={"/login"}>
+          <small>Login to save this post!</small>
+        </Link>
+      )}
     </div>
   );
 };

@@ -6,7 +6,8 @@
   --bg-lighter: rgba(0, 0, 0, .025);
   --shadow-light: 0 0 5px rgba(0, 0, 0, .2);
   --lightGray: lightSlateGray;
-  --main-color: #7058ff;
+  --main-color: #385cfb;
+  --main-color-dark: #2b52ff;
 }
 
 .dark {
@@ -60,10 +61,10 @@ a {
 
 .material-symbols-outlined.fill {
   font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
 }
 
 .container {

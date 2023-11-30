@@ -7,6 +7,8 @@ import { api } from "@/utils/api";
 import Loader from "@/components/Loader/Loader";
 import TextareaAutosize from "react-textarea-autosize";
 import { useSelector } from "react-redux";
+import AddreplyTextarea from "../AddreplyTextarea/AddreplyTextarea";
+import { useRouter } from "next/navigation";
 
 const SingleComment = ({ comment, comments, updateComments }) => {
   const [loading, setLoading] = useState(false);
@@ -14,6 +16,8 @@ const SingleComment = ({ comment, comments, updateComments }) => {
   const [edit, setEdit] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
+
+  const router = useRouter();
 
   const handleDelete = async (id) => {
     setLoading(true);
@@ -26,8 +30,18 @@ const SingleComment = ({ comment, comments, updateComments }) => {
     setLoading(false);
   };
 
+  const increaseReplyCount = () => {
+    let updatedComments = comments.map((c) => {
+      if (c.id !== comment.id) c.replyCount += 1;
+      return c;
+    });
+    updateComments(updatedComments);
+  };
+
+  const getTrimmedValue = () => value.replaceAll(/\s+/g, " ").trim();
+
   const handleSave = async () => {
-    let trimedValue = value.replaceAll(/\s+/g, " ").trim();
+    let trimedValue = getTrimmedValue();
     setValue(trimedValue);
     if (trimedValue !== comment.desc) {
       let updatedComments = comments.map((c) => {
@@ -51,6 +65,28 @@ const SingleComment = ({ comment, comments, updateComments }) => {
     setEdit(false);
   };
 
+  function handleCancel() {
+    let trimedValue = getTrimmedValue();
+    setValue(trimedValue);
+    setEdit(false);
+    setReply(false);
+  }
+  const [reply, setReply] = useState(false);
+
+  const handleReply = () => {
+    if (!user) return router.push("/login");
+    setReply(!reply);
+  };
+
+  const fetchReplies = async () => {
+    setLoading(true);
+    let res = await fetch(api.getReplies(comment.id));
+    if (res.ok) {
+      let data = await res.json();
+      console.log(data);
+    }
+    setLoading(false);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.seperator}>
@@ -70,7 +106,7 @@ const SingleComment = ({ comment, comments, updateComments }) => {
             </span>
           </div>
         </div>
-        {comment.user.id === user?.id && (
+        {user && comment.user.id === user?.id ? (
           <div className={styles.actions}>
             {loading ? (
               <Loader size="mini" />
@@ -83,11 +119,18 @@ const SingleComment = ({ comment, comments, updateComments }) => {
               </span>
             )}
             <span
-              onClick={() => setEdit(true)}
+              onClick={() => {
+                setEdit(true);
+                setValue(comment.desc);
+              }}
               className="material-symbols-outlined"
             >
               edit_square
             </span>
+          </div>
+        ) : (
+          <div onClick={handleReply} className={styles.actions}>
+            <span className="material-symbols-outlined">reply</span>
           </div>
         )}
       </div>
@@ -107,7 +150,7 @@ const SingleComment = ({ comment, comments, updateComments }) => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <div className={styles.editActions}>
+          <div className={`${styles.editActions}`}>
             <span
               onClick={handleSave}
               className="material-symbols-outlined icon saveIcon"
@@ -115,13 +158,29 @@ const SingleComment = ({ comment, comments, updateComments }) => {
               done
             </span>{" "}
             <span
-              onClick={() => setEdit(false)}
+              onClick={handleCancel}
               className="material-symbols-outlined icon cancelIcon"
             >
               close
             </span>
           </div>
         </>
+      )}
+      {reply && (
+        <AddreplyTextarea
+          handleCancel={handleCancel}
+          commentId={comment.id}
+          increaseReplyCount={increaseReplyCount}
+        />
+      )}
+      {comment.replyCount > 0 && (
+        <div className={styles.replyCount} onClick={fetchReplies}>
+          {comment.replyCount}{" "}
+          <span style={{ marginRight: "5px" }}>
+            {comment.replyCount > 1 ? "Replies" : "Reply"}
+          </span>
+          {loading && <Loader size="tooMini" />}
+        </div>
       )}
     </div>
   );

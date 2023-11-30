@@ -1,9 +1,9 @@
 "use client";
 
 import { api } from "@/utils/api";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addUser } from "@/redux/slices/authSlice";
+import { addUser, setLoading } from "@/redux/slices/authSlice";
 import useSWR from "swr";
 
 const fetcher = async (url) => {
@@ -17,7 +17,10 @@ const fetcher = async (url) => {
 
 const AuthUser = () => {
   const dispatch = useDispatch();
-  const { data } = useSWR(api.getUser(), fetcher);
+  const { data, isLoading } = useSWR(api.getUser(), fetcher);
+  useEffect(() =>{
+    dispatch(setLoading(isLoading))
+  },[isLoading])
   if (data) {
     dispatch(addUser(data.user));
   }

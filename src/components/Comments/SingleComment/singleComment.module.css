@@ -94,11 +94,13 @@
     height: fit-content !important;
 }
 
-.editCommentArea:focus {
+.editCommentArea:focus,
+.replyTextArea:focus {
     background: var(--bg-light);
 }
 
-.editCommentArea::-webkit-scrollbar {
+.editCommentArea::-webkit-scrollbar,
+.replyTextArea::-webkit-scrollbar {
     display: none;
 }
 
@@ -108,7 +110,8 @@
     gap: 5px;
 }
 
-.editActions span {
+.editActions span,
+.replyActions span {
     padding: 3px;
     border-radius: .2rem;
     background: rgba(0, 0, 0, .1);
@@ -117,8 +120,27 @@
     font-size: 1.2rem;
 }
 
-.editActions span:hover {
+.editActions span:hover, .replyActions span:hover {
     background: var(--bg-light);
+}
+
+.replyCount{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-weight: bold;
+    color: var(--main-color);
+    font-size: .75rem;
+    cursor: pointer;
+    margin-left: 2.5rem;
+    width: fit-content;
+    padding: 2px 10px;
+    border-radius: 1rem;
+    transition: background .2s;
+}
+
+.replyCount:hover{
+    background: var(--softBg);
 }
 
 @media screen and (max-width:768px) {

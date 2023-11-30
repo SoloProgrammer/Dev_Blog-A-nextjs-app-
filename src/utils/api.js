@@ -29,8 +29,14 @@ export const api = {
     updateComment: (query) => {
         return `${server.URL.local}/api/comments${query}`
     },
-    getUser:()=>{
+    getUser: () => {
         return `${server.URL.local}/api/user`
+    },
+    addReply: (commentId) => {
+        return `${server.URL.local}/api/comments/${commentId}/reply`
+    },
+    getReplies: (commentId) => {
+        return `${server.URL.local}/api/comments/${commentId}/reply`
     }
 }
 

@@ -48,6 +48,7 @@ model User {
   savedPosts    String[]
   Post          Post[]
   Comment       Comment[]
+  Reply         Reply[]
 }
 
 model VerificationToken {
@@ -82,11 +83,23 @@ model Post {
 }
 
 model Comment {
+  id         String   @id @default(cuid()) @map("_id")
+  createdAt  DateTime @default(now())
+  desc       String
+  userEmail  String
+  postSlug   String
+  replyCount Int      @default(0)
+  post       Post     @relation(fields: [postSlug], references: [slug])
+  user       User     @relation(fields: [userEmail], references: [email])
+  replies    Reply[]  @relation("commentReplies")
+}
+
+model Reply {
   id        String   @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
   desc      String
-  userEmail String
-  postSlug  String
-  post      Post     @relation(fields: [postSlug], references: [slug])
-  user      User     @relation(fields: [userEmail], references: [email])
+  userId    String
+  commentId String
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comment  @relation("commentReplies", fields: [commentId], references: [id])
 }
