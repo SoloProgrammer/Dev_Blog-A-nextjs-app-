@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./comments.module.css";
 import SingleComment from "./SingleComment/SingleComment";
 import Commonbtn from "../Commonbtn/Commonbtn";
@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { api } from "@/utils/api";
 import Loader from "../Loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { updateComments } from "@/redux/slices/commentsSlice";
 
 const fetcher = async (url) => {
   try {
@@ -24,13 +26,18 @@ const fetcher = async (url) => {
 
 const Comments = ({ postSlug }) => {
   const { status } = useSession();
+  const { comments } = useSelector((state) => state.comments);
+  const dispatch = useDispatch()
 
   const query = `?postSlug=${postSlug}`;
-
   const { data, mutate, isLoading } = useSWR(
     api.getPostComments(query),
     fetcher
   );
+  useEffect(() => {
+    dispatch(updateComments(data?.comments));
+  }, [data]);
+
   const postCommentIcon = (
     <span style={{ fontSize: ".85rem" }} className="material-symbols-outlined">
       send
@@ -53,9 +60,6 @@ const Comments = ({ postSlug }) => {
     setLoading(false);
   };
 
-  const updateComments = (comments) => {
-    mutate({ ...data, comments });
-  };
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -87,7 +91,7 @@ const Comments = ({ postSlug }) => {
           />
         )}
       </div>
-      {!isLoading && !data?.comments.length && (
+      {!isLoading && !comments?.length && (
         <p style={{ marginTop: "2rem" }}>
           No comments yet! be the first one to comment ☝️!
         </p>
@@ -99,18 +103,18 @@ const Comments = ({ postSlug }) => {
         </div>
       )}
       <div className={styles.commentsList}>
-        {data?.comments?.map((comment) => {
-          return (
-            <SingleComment
-              comments={data.comments}
-              updateComments={updateComments}
-              comment={comment}
-              key={comment.id}
-            />
-          );
-        })}
+        {comments?.length > 0 &&
+          comments?.map((comment) => {
+            return (
+              <SingleComment
+                comments={comments}
+                comment={comment}
+                key={comment.id}
+              />
+            );
+          })}
       </div>
-      {data?.count > 4 && (
+      {comments?.length > 4 && (
         <span className={styles.viewMore}>View more comments..</span>
       )}
     </div>

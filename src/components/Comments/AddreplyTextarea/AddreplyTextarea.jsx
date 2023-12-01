@@ -4,11 +4,17 @@ import styles from "./addreplyTextarea.module.css";
 import TextareaAutosize from "react-textarea-autosize";
 import Loader from "@/components/Loader/Loader";
 import { api } from "@/utils/api";
+import { useDispatch } from "react-redux";
+import { incrementRepliesCount } from "@/redux/slices/commentsSlice";
+import { XMarkIcon } from "@/GoogleIcons/Icons";
+import { getTrimmedValue } from "../SingleComment/SingleComment";
 
-const AddreplyTextarea = ({ handleCancel, commentId, increaseReplyCount }) => {
-  const [desc, setDesc] = useState();
+const AddreplyTextarea = ({ handleCancel, commentId }) => {
+  const [desc, setDesc] = useState("");
   const [loading, setLoading] = useState(false);
   let replyBoxTextContainerRef = useRef();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setTimeout(() => {
       replyBoxTextContainerRef?.current?.classList?.add(`${styles.active}`);
@@ -22,11 +28,11 @@ const AddreplyTextarea = ({ handleCancel, commentId, increaseReplyCount }) => {
       body: JSON.stringify({ desc }),
     };
     let res = await fetch(api.addReply(commentId), options);
-    if(res.ok){
-      increaseReplyCount()
+    if (res.ok) {
+      dispatch(incrementRepliesCount({ commentId }));
     }
     setLoading(false);
-    handleCancel()
+    handleCancel();
   };
 
   return (
@@ -47,17 +53,12 @@ const AddreplyTextarea = ({ handleCancel, commentId, increaseReplyCount }) => {
         <div className={`${styles.replyActions}`}>
           <button
             onClick={handleSaveReply}
-            disabled={!desc || loading}
+            disabled={!getTrimmedValue(desc) || loading}
             className={styles.saveReplyBtn}
           >
             Save {loading && <Loader size="mini" />}
           </button>
-          <span
-            onClick={handleCancel}
-            className="material-symbols-outlined icon cancelIcon"
-          >
-            close
-          </span>
+          <XMarkIcon classes={['icon cancelIcon']} handleFunc={handleCancel}/>
         </div>
       </div>
     </div>

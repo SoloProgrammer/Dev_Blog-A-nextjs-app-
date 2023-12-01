@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import styles from "./singleComment.module.css";
 import Image from "next/image";
@@ -6,16 +7,24 @@ import { getFormattedPostDate } from "@/utils/date";
 import { api } from "@/utils/api";
 import Loader from "@/components/Loader/Loader";
 import TextareaAutosize from "react-textarea-autosize";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddreplyTextarea from "../AddreplyTextarea/AddreplyTextarea";
 import { useRouter } from "next/navigation";
+import ReplyCount from "../ReplyCount/ReplyCount";
+import Replies from "../Replies/Replies";
+import { updateComments, updateComment } from "@/redux/slices/commentsSlice";
+import { ReplyIcon, SaveIcon, XMarkIcon } from "@/GoogleIcons/Icons";
 
-const SingleComment = ({ comment, comments, updateComments }) => {
+export const getTrimmedValue = (value) => value.replaceAll(/\s+/g, " ").trim();
+
+const SingleComment = ({ comment }) => {
+  const { comments } = useSelector((state) => state.comments);
+  const { user } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(comment.desc);
   const [edit, setEdit] = useState(false);
-
-  const { user } = useSelector((state) => state.auth);
 
   const router = useRouter();
 
@@ -26,31 +35,16 @@ const SingleComment = ({ comment, comments, updateComments }) => {
       method: "DELETE",
     });
     let updatedComments = comments.filter((c) => c.id !== comment.id);
-    updateComments(updatedComments);
+    dispatch(updateComments(updatedComments));
     setLoading(false);
   };
 
-  const increaseReplyCount = () => {
-    let updatedComments = comments.map((c) => {
-      if (c.id !== comment.id) c.replyCount += 1;
-      return c;
-    });
-    updateComments(updatedComments);
-  };
-
-  const getTrimmedValue = () => value.replaceAll(/\s+/g, " ").trim();
-
   const handleSave = async () => {
-    let trimedValue = getTrimmedValue();
+    let trimedValue = getTrimmedValue(value);
     setValue(trimedValue);
     if (trimedValue !== comment.desc) {
-      let updatedComments = comments.map((c) => {
-        if (c.id === comment.id) {
-          c.desc = trimedValue;
-        }
-        return c;
-      });
-
+      // updating comments in redux store
+      dispatch(updateComment({ commentId: comment.id, desc: value }));
       setEdit(false);
 
       // updating commnets on server
@@ -60,13 +54,12 @@ const SingleComment = ({ comment, comments, updateComments }) => {
       };
       let query = `?id=${comment.id}`;
       await fetch(api.updateComment(query), options);
-      updateComments(updatedComments);
     }
     setEdit(false);
   };
 
   function handleCancel() {
-    let trimedValue = getTrimmedValue();
+    let trimedValue = getTrimmedValue(value);
     setValue(trimedValue);
     setEdit(false);
     setReply(false);
@@ -78,15 +71,7 @@ const SingleComment = ({ comment, comments, updateComments }) => {
     setReply(!reply);
   };
 
-  const fetchReplies = async () => {
-    setLoading(true);
-    let res = await fetch(api.getReplies(comment.id));
-    if (res.ok) {
-      let data = await res.json();
-      console.log(data);
-    }
-    setLoading(false);
-  };
+  const [showreplies, setShowReplies] = useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.seperator}>
@@ -130,7 +115,7 @@ const SingleComment = ({ comment, comments, updateComments }) => {
           </div>
         ) : (
           <div onClick={handleReply} className={styles.actions}>
-            <span className="material-symbols-outlined">reply</span>
+            <ReplyIcon />
           </div>
         )}
       </div>
@@ -151,37 +136,26 @@ const SingleComment = ({ comment, comments, updateComments }) => {
             onChange={(e) => setValue(e.target.value)}
           />
           <div className={`${styles.editActions}`}>
-            <span
-              onClick={handleSave}
-              className="material-symbols-outlined icon saveIcon"
-            >
-              done
-            </span>{" "}
-            <span
-              onClick={handleCancel}
-              className="material-symbols-outlined icon cancelIcon"
-            >
-              close
-            </span>
+            <SaveIcon classes={["icon saveIcon"]} handleFunc={handleSave} />
+            <XMarkIcon
+              classes={["icon cancelIcon"]}
+              handleFunc={handleCancel}
+            />
           </div>
         </>
       )}
       {reply && (
-        <AddreplyTextarea
-          handleCancel={handleCancel}
-          commentId={comment.id}
-          increaseReplyCount={increaseReplyCount}
-        />
+        <AddreplyTextarea handleCancel={handleCancel} commentId={comment.id} />
       )}
       {comment.replyCount > 0 && (
-        <div className={styles.replyCount} onClick={fetchReplies}>
-          {comment.replyCount}{" "}
-          <span style={{ marginRight: "5px" }}>
-            {comment.replyCount > 1 ? "Replies" : "Reply"}
-          </span>
-          {loading && <Loader size="tooMini" />}
-        </div>
+        <ReplyCount
+          count={comment.replyCount}
+          comment={comment}
+          setShowReplies={setShowReplies}
+          showreplies={showreplies}
+        />
       )}
+      {comment.replies && showreplies && <Replies replies={comment.replies} />}
     </div>
   );
 };

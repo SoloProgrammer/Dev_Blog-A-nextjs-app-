@@ -22,3 +22,10 @@ export const VideoIcon = ({ classes, handleFunc }) =>
 
 export const XMarkIcon = ({ classes = [], handleFunc }) =>
   returnIconSpan("close", classes, handleFunc);
+
+export const SaveIcon = ({ classes = [], handleFunc }) =>
+  returnIconSpan("done", classes, handleFunc);
+  
+export const ReplyIcon = ({ classes = [], handleFunc }) =>
+  returnIconSpan("reply", classes, handleFunc);
+

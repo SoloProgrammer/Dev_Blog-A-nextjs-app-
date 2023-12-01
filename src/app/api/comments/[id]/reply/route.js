@@ -38,7 +38,6 @@ export const PUT = async (req, { params }) => {
 
 export const GET = async (_, { params }) => {
     const session = await getAuthSession()
-    if (!session) return new NextResponse(JSON.stringify({ message: 'Not Authenticated!' }), { status: 401 });
 
     try {
         const { id } = params
