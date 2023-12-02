@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import styles from "./writePage.module.css";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { ThemeStates } from "@/context/ThemeContext";
 import {
@@ -17,6 +16,8 @@ import ImageDropZone from "@/components/ImageDropZone/ImageDropZone";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Writepage = () => {
   const [value, setValue] = useState("");
@@ -49,10 +50,12 @@ const Writepage = () => {
     setShowImgDropZone(false);
   };
 
-  if(status === "loading"){
-    return <div className="LoadingContainer">
-      <Loader size="medium"/>
-    </div>
+  if (status === "loading") {
+    return (
+      <div className="LoadingContainer">
+        <Loader size="medium" />
+      </div>
+    );
   }
 
   if (status === "unauthenticated") {

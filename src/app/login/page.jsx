@@ -9,7 +9,7 @@ import { signIn, useSession } from "next-auth/react";
 import Loader from "@/components/Loader/Loader";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const LoginPage = () => {
   const { theme } = ThemeStates();
   const { status } = useSession();
   const router = useRouter();
@@ -88,4 +88,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;
