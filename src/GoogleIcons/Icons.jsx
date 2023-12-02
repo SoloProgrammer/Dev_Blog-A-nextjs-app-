@@ -29,3 +29,11 @@ export const SaveIcon = ({ classes = [], handleFunc }) =>
 export const ReplyIcon = ({ classes = [], handleFunc }) =>
   returnIconSpan("reply", classes, handleFunc);
 
+export const EditSquareIcon = ({ classes = [], handleFunc }) =>
+  returnIconSpan("edit_square", classes, handleFunc);
+
+export const DeleteIcon = ({ classes = [], handleFunc }) =>
+  returnIconSpan("delete", classes, handleFunc);
+
+
+

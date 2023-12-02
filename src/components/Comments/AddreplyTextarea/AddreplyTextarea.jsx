@@ -5,7 +5,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import Loader from "@/components/Loader/Loader";
 import { api } from "@/utils/api";
 import { useDispatch } from "react-redux";
-import { incrementRepliesCount } from "@/redux/slices/commentsSlice";
+import { incrementRepliesCount, removeReplies } from "@/redux/slices/commentsSlice";
 import { XMarkIcon } from "@/GoogleIcons/Icons";
 import { getTrimmedValue } from "../SingleComment/SingleComment";
 
@@ -24,12 +24,13 @@ const AddreplyTextarea = ({ handleCancel, commentId }) => {
   const handleSaveReply = async () => {
     setLoading(true);
     let options = {
-      method: "PUT",
+      method: "POST",
       body: JSON.stringify({ desc }),
     };
     let res = await fetch(api.addReply(commentId), options);
     if (res.ok) {
       dispatch(incrementRepliesCount({ commentId }));
+      dispatch(removeReplies({ commentId }));
     }
     setLoading(false);
     handleCancel();

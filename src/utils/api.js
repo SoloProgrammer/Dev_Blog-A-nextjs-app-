@@ -37,6 +37,12 @@ export const api = {
     },
     getReplies: (commentId) => {
         return `${server.URL.local}/api/comments/${commentId}/reply`
+    },
+    updateReply: (commentId, query) => {
+        return `${server.URL.local}/api/comments/${commentId}/reply${query}`
+    },
+    deleteReply: (commentId, query) => {
+        return `${server.URL.local}/api/comments/${commentId}/reply${query}`
     }
 }
 

@@ -1,4 +1,4 @@
-.replyCount{
+.replyCount {
     display: flex;
     align-items: center;
     gap: 2px;
@@ -13,6 +13,7 @@
     transition: background .2s;
 }
 
-.replyCount:hover{
+.replyCount:hover,
+.replyCount.open {
     background: var(--softBg);
 }

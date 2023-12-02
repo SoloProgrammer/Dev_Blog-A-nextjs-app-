@@ -6,25 +6,35 @@ import { api } from "@/utils/api";
 import { addReplies } from "@/redux/slices/commentsSlice";
 import { useDispatch } from "react-redux";
 
-const ReplyCount = ({ count, comment, setShowReplies, showreplies }) => {
+const ReplyCount = ({
+  count,
+  comment,
+  setShowReplies,
+  setReply,
+  showreplies,
+}) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const fetchReplies = async () => {
     // toggling replies-container if replies is already fetched from the server
+    setReply(false);
     if (comment.replies) return setShowReplies(!showreplies);
-
+    
     setLoading(true);
     let res = await fetch(api.getReplies(comment.id));
     if (res.ok) {
       let data = await res.json();
       dispatch(addReplies({ replies: data.replies, commentId: comment.id }));
     }
+    setTimeout(() =>  setShowReplies(true), 50);
     setLoading(false);
-    setShowReplies(true);
   };
   return (
-    <div className={styles.replyCount} onClick={fetchReplies}>
+    <div
+      className={`${styles.replyCount} ${showreplies && styles.open}`}
+      onClick={fetchReplies}
+    >
       {showreplies && "Hide "}
       {count}{" "}
       <span style={{ marginRight: "5px" }}>

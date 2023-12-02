@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./singleComment.module.css";
 import Image from "next/image";
 import { getFormattedPostDate } from "@/utils/date";
 import { api } from "@/utils/api";
-import Loader from "@/components/Loader/Loader";
-import TextareaAutosize from "react-textarea-autosize";
 import { useDispatch, useSelector } from "react-redux";
 import AddreplyTextarea from "../AddreplyTextarea/AddreplyTextarea";
 import { useRouter } from "next/navigation";
 import ReplyCount from "../ReplyCount/ReplyCount";
 import Replies from "../Replies/Replies";
 import { updateComments, updateComment } from "@/redux/slices/commentsSlice";
-import { ReplyIcon, SaveIcon, XMarkIcon } from "@/GoogleIcons/Icons";
+import { ReplyIcon } from "@/GoogleIcons/Icons";
+import DelEditActions from "@/components/Actions/DelEditActions";
+import SaveCancelEditor from "@/components/SaveCancelEditor/SaveCancelEditor";
 
 export const getTrimmedValue = (value) => value.replaceAll(/\s+/g, " ").trim();
 
@@ -28,15 +28,20 @@ const SingleComment = ({ comment }) => {
 
   const router = useRouter();
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     setLoading(true);
-    const query = `?id=${id}`;
+    const query = `?id=${comment.id}`;
     await fetch(api.deleteComment(query), {
       method: "DELETE",
     });
     let updatedComments = comments.filter((c) => c.id !== comment.id);
     dispatch(updateComments(updatedComments));
     setLoading(false);
+  };
+
+  const handleEdit = () => {
+    setEdit(true);
+    setValue(comment.desc);
   };
 
   const handleSave = async () => {
@@ -69,9 +74,23 @@ const SingleComment = ({ comment }) => {
   const handleReply = () => {
     if (!user) return router.push("/login");
     setReply(!reply);
+    setShowReplies(false);
   };
 
+  const repliesContainerRef = useRef();
   const [showreplies, setShowReplies] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      showreplies &&
+        repliesContainerRef?.current?.classList.add(`${styles.active}`);
+    }, 0);
+  }, [showreplies, comment]);
+
+  function onChangeHandler(e) {
+    setValue(e.target.value);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.seperator}>
@@ -93,25 +112,11 @@ const SingleComment = ({ comment }) => {
         </div>
         {user && comment.user.id === user?.id ? (
           <div className={styles.actions}>
-            {loading ? (
-              <Loader size="mini" />
-            ) : (
-              <span
-                onClick={() => handleDelete(comment.id)}
-                className="material-symbols-outlined"
-              >
-                delete
-              </span>
-            )}
-            <span
-              onClick={() => {
-                setEdit(true);
-                setValue(comment.desc);
-              }}
-              className="material-symbols-outlined"
-            >
-              edit_square
-            </span>
+            <DelEditActions
+              loading={loading}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
           </div>
         ) : (
           <div onClick={handleReply} className={styles.actions}>
@@ -121,28 +126,16 @@ const SingleComment = ({ comment }) => {
       </div>
       {!edit && <p className={styles.commentText}>{comment.desc}</p>}
       {edit && (
-        <>
-          <TextareaAutosize
-            onFocus={(e) =>
-              e.target.setSelectionRange(
-                comment.desc.length,
-                comment.desc.length
-              )
-            }
-            autoFocus={edit}
-            maxRows={5}
-            className={styles.editCommentArea}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <div className={`${styles.editActions}`}>
-            <SaveIcon classes={["icon saveIcon"]} handleFunc={handleSave} />
-            <XMarkIcon
-              classes={["icon cancelIcon"]}
-              handleFunc={handleCancel}
-            />
-          </div>
-        </>
+        <SaveCancelEditor
+          value={value}
+          onChangeHandler={onChangeHandler}
+          selectionStartRange={comment.desc.length}
+          selectionEndRange={comment.desc.length}
+          autoFocus={edit}
+          maxRows={5}
+          handleSave={handleSave}
+          handleCancel={handleCancel}
+        />
       )}
       {reply && (
         <AddreplyTextarea handleCancel={handleCancel} commentId={comment.id} />
@@ -151,11 +144,16 @@ const SingleComment = ({ comment }) => {
         <ReplyCount
           count={comment.replyCount}
           comment={comment}
+          setReply={setReply}
           setShowReplies={setShowReplies}
           showreplies={showreplies}
         />
       )}
-      {comment.replies && showreplies && <Replies replies={comment.replies} />}
+      {comment.replies && showreplies && (
+        <div ref={repliesContainerRef} className={`${styles.repliesContainer}`}>
+          <Replies commentId={comment.id} replies={comment.replies} />
+        </div>
+      )}
     </div>
   );
 };

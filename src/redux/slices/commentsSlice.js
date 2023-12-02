@@ -34,9 +34,38 @@ const comments = createSlice({
                 }
                 return c;
             })
+        },
+        removeReplies: (state, { payload: { commentId } }) => {
+            state.comments = state.comments.map(c => {
+                if (c.id === commentId) c.replies = null
+                return c
+            })
+        },
+        updateReply: (state, { payload: { commentId, replyId, newDesc } }) => {
+            state.comments = state.comments.map(c => {
+                if (c.id === commentId) {
+                    c.replies.map(r => {
+                        if (r.id === replyId) {
+                            r.desc = newDesc
+                        }
+                        return r
+                    })
+                }
+                return c;
+            })
+        },
+        deleteReply: (state, { payload: { commentId, replyId } }) => {
+            state.comments = state.comments.map(c => {
+                if (c.id === commentId) {
+                    c.replyCount -= 1
+                    let updatedReplies = c.replies.filter(r => r.id !== replyId)
+                    c.replies = updatedReplies.length ? updatedReplies : null
+                }
+                return c;
+            })
         }
     }
 })
 
-export const { incrementRepliesCount, updateComments, updateComment, addReplies } = comments.actions
+export const { incrementRepliesCount, updateComments, updateComment, addReplies, removeReplies, updateReply, deleteReply } = comments.actions
 export default comments.reducer
