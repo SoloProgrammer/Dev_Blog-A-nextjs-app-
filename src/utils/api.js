@@ -1,9 +1,10 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
+const LOCAL_URL = "http://localhost:3000"
+const PRODUCTION_URL = "https://dev-blog-a-nextjs-app.vercel.app"
+
 export const server = {
-    URL: isProduction
-        ? "https://dev-blog-a-nextjs-app.vercel.app"
-        : "http://localhost:3000"
+    URL: isProduction ? PRODUCTION_URL : LOCAL_URL
 };
 
 export const api = {
