@@ -1,7 +1,7 @@
 export const server = {
     URL: {
         local: "http://localhost:3000",
-        production: "dev-blog-a-nextjs-3p5i6t99j-solo-programmers-projects.vercel.app"
+        production: "https://dev-blog-a-nextjs-3p5i6t99j-solo-programmers-projects.vercel.app"
     }
 }
 
