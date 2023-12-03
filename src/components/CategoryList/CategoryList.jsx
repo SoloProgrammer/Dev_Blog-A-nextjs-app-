@@ -5,7 +5,6 @@ import Image from "next/image";
 import { api } from "@/utils/api";
 
 const getData = async () => {
-  console.log("get data");
   const res = await fetch(api.getCategories(), { cache: "no-store" });
   if (!res.ok) {
     throw new Error("Failed!");

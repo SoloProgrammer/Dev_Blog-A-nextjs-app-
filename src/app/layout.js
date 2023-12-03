@@ -11,7 +11,7 @@ import AuthUser from '@/components/Auth/AuthUser'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Dev_Blog',
+  title: 'Next_Dev_Blog',
   description: 'Blog app created using nextjs',
 }
 
@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
                     </div>
                     <Footer />
                   </div>
-                  <AuthUser/>
+                  <AuthUser />
                 </div>
               </ThemeProvider>
             </ThemeContextprovider>
