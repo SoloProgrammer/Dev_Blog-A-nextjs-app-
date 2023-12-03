@@ -2,7 +2,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export const server = {
     URL: isProduction
-        ? "https://dev-blog-a-nextjs-3p5i6t99j-solo-programmers-projects.vercel.app"
+        ? "https://dev-blog-a-nextjs-app.vercel.app"
         : "http://localhost:3000"
 };
 
