@@ -12,18 +12,19 @@ const SavePostIcon = ({ slug, postId }) => {
   const { user, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
-  function toggleFill(target){
-    target.innerText = target.innerText === "bookmark_add" ? "bookmark_added" : "bookmark_add";
+  function toggleFill(target) {
+    target.innerText =
+      target.innerText === "bookmark_add" ? "bookmark_added" : "bookmark_add";
     target.classList.toggle("fill");
   }
   const hanldeSavePost = async (e) => {
     if (!user) return router.push("/login");
 
     if (e.target.classList.contains("fill")) {
-      toggleFill(e.target)
+      toggleFill(e.target);
       dispatch(unSavePost({ postId }));
     } else {
-      toggleFill(e.target)
+      toggleFill(e.target);
       dispatch(savePost({ postId }));
     }
     const options = {

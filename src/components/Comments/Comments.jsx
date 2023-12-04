@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./comments.module.css";
-import SingleComment from "./SingleComment/SingleComment";
+import SingleComment, { getTrimmedValue } from "./SingleComment/SingleComment";
 import Commonbtn from "../Commonbtn/Commonbtn";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
@@ -10,6 +10,8 @@ import { api } from "@/utils/api";
 import Loader from "../Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { updateComments } from "@/redux/slices/commentsSlice";
+
+var isInterSecting = false;
 
 const fetcher = async (url) => {
   try {
@@ -27,15 +29,15 @@ const fetcher = async (url) => {
 const Comments = ({ postSlug }) => {
   const { status } = useSession();
   const { comments } = useSelector((state) => state.comments);
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const [shouldCommentsLoad, setShouldCommentsLoad] = useState(false);
   const query = `?postSlug=${postSlug}`;
   const { data, mutate, isLoading } = useSWR(
-    api.getPostComments(query),
+    !shouldCommentsLoad || comments.length ? null : api.getPostComments(query),
     fetcher
   );
   useEffect(() => {
-    dispatch(updateComments(data?.comments));
+    data?.comments && dispatch(updateComments(data?.comments));
   }, [data]);
 
   const postCommentIcon = (
@@ -44,7 +46,7 @@ const Comments = ({ postSlug }) => {
     </span>
   );
 
-  const [desc, setDesc] = useState();
+  const [desc, setDesc] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -59,6 +61,22 @@ const Comments = ({ postSlug }) => {
     mutate();
     setLoading(false);
   };
+
+  // Intersection observer effect/logic for activating comments fetching...
+  useEffect(() => {
+    function callback(entries) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          setShouldCommentsLoad(true);
+        }
+      });
+    }
+    let options = { threshold: 0.9 };
+    let observer = new IntersectionObserver(callback, options);
+    let commentsList = document.querySelector(`.${styles.commentsList}`);
+    commentsList && observer.observe(commentsList);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -83,7 +101,7 @@ const Comments = ({ postSlug }) => {
         />
         {status !== "unauthenticated" && (
           <Commonbtn
-            disabled={loading}
+            disabled={loading || !getTrimmedValue(desc)}
             handleFunc={handleSubmit}
             text={"Post"}
             size="small"
@@ -97,9 +115,16 @@ const Comments = ({ postSlug }) => {
         </p>
       )}
       {isLoading && (
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "20px",
+            marginTop: "1rem",
+          }}
+        >
           <Loader size="small" />
-          Loading comments..
+          Loading comments.....
         </div>
       )}
       <div className={styles.commentsList}>

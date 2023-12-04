@@ -1,71 +1,79 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    comments: []
-}
+    comments: [],
+};
 
 const comments = createSlice({
-    name: 'commentsSlice',
+    name: "commentsSlice",
     initialState,
     reducers: {
         updateComments: (state, { payload }) => {
-            state.comments = payload
+            state.comments = payload;
         },
         updateComment: (state, { payload: { commentId, desc } }) => {
-            state.comments = state.comments.map(c => {
+            state.comments = state.comments.map((c) => {
                 if (c.id === commentId) {
-                    c.desc = desc
+                    c.desc = desc;
                 }
-                return c
-            })
+                return c;
+            });
         },
         incrementRepliesCount: (state, { payload: { commentId } }) => {
-            state.comments = state.comments.map(c => {
+            state.comments = state.comments.map((c) => {
                 if (c.id === commentId) {
-                    c.replyCount += 1
+                    c.replyCount += 1;
                 }
-                return c
-            })
+                return c;
+            });
         },
         addReplies: (state, { payload: { commentId, replies } }) => {
-            state.comments = state.comments.map(c => {
+            state.comments = state.comments.map((c) => {
                 if (c.id === commentId) {
-                    c.replies = replies
+                    c.replies = replies;
                 }
                 return c;
-            })
+            });
         },
         removeReplies: (state, { payload: { commentId } }) => {
-            state.comments = state.comments.map(c => {
-                if (c.id === commentId) c.replies = null
-                return c
-            })
+            state.comments = state.comments.map((c) => {
+                if (c.id === commentId) c.replies = null;
+                return c;
+            });
         },
         updateReply: (state, { payload: { commentId, replyId, newDesc } }) => {
-            state.comments = state.comments.map(c => {
+            state.comments = state.comments.map((c) => {
                 if (c.id === commentId) {
-                    c.replies.map(r => {
+                    c.replies.map((r) => {
                         if (r.id === replyId) {
-                            r.desc = newDesc
+                            r.desc = newDesc;
                         }
-                        return r
-                    })
+                        return r;
+                    });
                 }
                 return c;
-            })
+            });
         },
         deleteReply: (state, { payload: { commentId, replyId } }) => {
-            state.comments = state.comments.map(c => {
+            state.comments = state.comments.map((c) => {
                 if (c.id === commentId) {
-                    c.replyCount -= 1
-                    let updatedReplies = c.replies.filter(r => r.id !== replyId)
-                    c.replies = updatedReplies.length ? updatedReplies : null
+                    c.replyCount -= 1;
+                    let updatedReplies = c.replies.filter((r) => r.id !== replyId);
+                    c.replies = updatedReplies.length ? updatedReplies : null;
                 }
                 return c;
-            })
-        }
-    }
-})
+            });
+        },
+    },
+});
 
-export const { incrementRepliesCount, updateComments, updateComment, addReplies, removeReplies, updateReply, deleteReply } = comments.actions
-export default comments.reducer
+export const {
+    incrementRepliesCount,
+    updateComments,
+    updateComment,
+    addReplies,
+    removeReplies,
+    updateReply,
+    deleteReply,
+} = comments.actions;
+export default comments.reducer;
