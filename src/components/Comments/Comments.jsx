@@ -5,40 +5,36 @@ import styles from "./comments.module.css";
 import SingleComment, { getTrimmedValue } from "./SingleComment/SingleComment";
 import Commonbtn from "../Commonbtn/Commonbtn";
 import { useSession } from "next-auth/react";
-import useSWR from "swr";
 import { api } from "@/utils/api";
 import Loader from "../Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewComment, updateComments } from "@/redux/slices/commentsSlice";
 
-var isInterSecting = false;
-
-const fetcher = async (url) => {
-  try {
-    const res = await fetch(url, { cache: "no-store" });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
-    }
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+var isIntersected;
 
 const Comments = ({ postSlug }) => {
   const { status } = useSession();
   const { comments } = useSelector((state) => state.comments);
   const dispatch = useDispatch();
-  const [shouldCommentsLoad, setShouldCommentsLoad] = useState(false);
-  const query = `?postSlug=${postSlug}`;
-  const { data, mutate, isLoading } = useSWR(
-    !shouldCommentsLoad || comments.length ? null : api.getPostComments(query),
-    fetcher
-  );
-  useEffect(() => {
-    data?.comments && dispatch(updateComments(data?.comments));
-  }, [data]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchComments = async () => {
+    try {
+      setIsLoading(true);
+      const query = `?postSlug=${postSlug}`;
+      const res = await fetch(api.getPostComments(query), {
+        cache: "no-store",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+      dispatch(updateComments(data?.comments));
+    } catch (error) {
+      throw new Error(error.message);
+    }
+    setIsLoading(false);
+  };
 
   const postCommentIcon = (
     <span style={{ fontSize: ".85rem" }} className="material-symbols-outlined">
@@ -60,7 +56,7 @@ const Comments = ({ postSlug }) => {
     const res = await fetch(api.createNewComment(), options);
     if (res.ok) {
       let data = await res.json();
-      dispatch(addNewComment(data.comment))
+      dispatch(addNewComment(data.comment));
     }
     setLoading(false);
   };
@@ -70,8 +66,9 @@ const Comments = ({ postSlug }) => {
     function callback(entries) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          !isIntersected && fetchComments();
+          isIntersected = true;
           observer.unobserve(entry.target);
-          setShouldCommentsLoad(true);
         }
       });
     }
@@ -79,6 +76,12 @@ const Comments = ({ postSlug }) => {
     let observer = new IntersectionObserver(callback, options);
     let commentsList = document.querySelector(`.${styles.container}`);
     commentsList && observer.observe(commentsList);
+
+    // clearing comments data from store when comments components unmounted!
+    return () => {
+      isIntersected = false;
+      dispatch(updateComments([]));
+    };
   }, []);
 
   return (
@@ -108,7 +111,7 @@ const Comments = ({ postSlug }) => {
             handleFunc={handleSubmit}
             text={"Post"}
             size="small"
-            icon={!loading ? postCommentIcon : <Loader size="tooMini"/>}
+            icon={!loading ? postCommentIcon : <Loader size="tooMini" />}
           />
         )}
       </div>
