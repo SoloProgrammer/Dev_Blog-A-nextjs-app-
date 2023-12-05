@@ -29,11 +29,13 @@ const SavePostIcon = ({ slug, postId }) => {
       toggleFill(e.target);
       dispatch(savePost({ postId }));
     }
+    setTimeout(() => {
+      setIsSaving(false);
+    }, 350);
     const options = {
       method: "PUT",
     };
     await fetch(api.savePost(slug), options);
-    setIsSaving(false);
   };
 
   if (loading) return;
