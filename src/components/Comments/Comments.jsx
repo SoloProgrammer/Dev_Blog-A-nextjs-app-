@@ -9,7 +9,7 @@ import useSWR from "swr";
 import { api } from "@/utils/api";
 import Loader from "../Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { updateComments } from "@/redux/slices/commentsSlice";
+import { addNewComment, updateComments } from "@/redux/slices/commentsSlice";
 
 var isInterSecting = false;
 
@@ -57,8 +57,11 @@ const Comments = ({ postSlug }) => {
       method: "POST",
       body: JSON.stringify({ desc, postSlug }),
     };
-    await fetch(api.createNewComment(), options);
-    mutate();
+    const res = await fetch(api.createNewComment(), options);
+    if (res.ok) {
+      let data = await res.json();
+      dispatch(addNewComment(data.comment))
+    }
     setLoading(false);
   };
 
@@ -72,9 +75,9 @@ const Comments = ({ postSlug }) => {
         }
       });
     }
-    let options = { threshold: 0.9 };
+    let options = { threshold: 0.2 };
     let observer = new IntersectionObserver(callback, options);
-    let commentsList = document.querySelector(`.${styles.commentsList}`);
+    let commentsList = document.querySelector(`.${styles.container}`);
     commentsList && observer.observe(commentsList);
   }, []);
 
@@ -105,7 +108,7 @@ const Comments = ({ postSlug }) => {
             handleFunc={handleSubmit}
             text={"Post"}
             size="small"
-            icon={postCommentIcon}
+            icon={!loading ? postCommentIcon : <Loader size="tooMini"/>}
           />
         )}
       </div>

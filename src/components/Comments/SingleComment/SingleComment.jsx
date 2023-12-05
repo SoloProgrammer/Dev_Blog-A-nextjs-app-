@@ -81,10 +81,12 @@ const SingleComment = ({ comment }) => {
   const [showreplies, setShowReplies] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    comment.replies &&
       showreplies &&
-        repliesContainerRef?.current?.classList.add(`${styles.active}`);
-    }, 0);
+      setTimeout(
+        () => repliesContainerRef?.current?.classList.add(`${styles.active}`),
+        20
+      );
   }, [showreplies, comment]);
 
   function onChangeHandler(e) {

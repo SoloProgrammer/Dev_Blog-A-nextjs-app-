@@ -14,7 +14,7 @@ const getPosts = async (page, category) => {
   return res.json();
 };
 
-const BlogList = async ({ page, category = "" }) => {
+const BlogList = async ({ page, category = "", showBtn = true }) => {
   const { posts, postsCount } = await getPosts(page, category);
   const POSTS_PER_PAGE = 4;
   let maxPage = Math.ceil(postsCount / POSTS_PER_PAGE) || 1;
@@ -28,7 +28,7 @@ const BlogList = async ({ page, category = "" }) => {
         <h1 className={styles.title}>Recent Posts</h1>
         <div className={styles.posts}>
           {posts?.map((post) => {
-            return <BlogCard post={post} key={post._id} />;
+            return <BlogCard post={post} key={post._id} showBtn={showBtn} />;
           })}
         </div>
         <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />

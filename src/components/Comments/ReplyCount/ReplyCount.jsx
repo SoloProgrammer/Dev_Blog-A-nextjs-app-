@@ -20,14 +20,14 @@ const ReplyCount = ({
     // toggling replies-container if replies is already fetched from the server
     setReply(false);
     if (comment.replies) return setShowReplies(!showreplies);
-    
+
     setLoading(true);
     let res = await fetch(api.getReplies(comment.id));
     if (res.ok) {
       let data = await res.json();
       dispatch(addReplies({ replies: data.replies, commentId: comment.id }));
+      setShowReplies(true)
     }
-    setTimeout(() =>  setShowReplies(true), 50);
     setLoading(false);
   };
   return (

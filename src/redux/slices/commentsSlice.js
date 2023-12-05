@@ -11,6 +11,9 @@ const comments = createSlice({
         updateComments: (state, { payload }) => {
             state.comments = payload;
         },
+        addNewComment: (state, { payload }) => {
+            state.comments = state.comments.concat(payload)
+        },
         updateComment: (state, { payload: { commentId, desc } }) => {
             state.comments = state.comments.map((c) => {
                 if (c.id === commentId) {
@@ -70,6 +73,7 @@ const comments = createSlice({
 export const {
     incrementRepliesCount,
     updateComments,
+    addNewComment,
     updateComment,
     addReplies,
     removeReplies,
