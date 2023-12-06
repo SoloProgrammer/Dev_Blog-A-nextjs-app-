@@ -12,7 +12,7 @@ import { addNewComment, updateComments } from "@/redux/slices/commentsSlice";
 
 var isIntersected;
 
-const Comments = ({ postSlug }) => {
+const Comments = ({ postSlug, commentsCount }) => {
   const { status } = useSession();
   const { comments } = useSelector((state) => state.comments);
   const dispatch = useDispatch();
@@ -63,25 +63,27 @@ const Comments = ({ postSlug }) => {
 
   // Intersection observer effect/logic for activating comments fetching...
   useEffect(() => {
-    function callback(entries) {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          !isIntersected && fetchComments();
-          isIntersected = true;
-          observer.unobserve(entry.target);
-        }
-      });
-    }
-    let options = { threshold: 0.2 };
-    let observer = new IntersectionObserver(callback, options);
-    let commentsList = document.querySelector(`.${styles.container}`);
-    commentsList && observer.observe(commentsList);
+    if (commentsCount) {
+      function callback(entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            !isIntersected && fetchComments();
+            isIntersected = true;
+            observer.unobserve(entry.target);
+          }
+        });
+      }
+      let options = { threshold: 0.2 };
+      let observer = new IntersectionObserver(callback, options);
+      let commentsList = document.querySelector(`.${styles.container}`);
+      commentsList && observer.observe(commentsList);
 
-    // clearing comments data from store when comments components unmounted!
-    return () => {
-      isIntersected = false;
-      dispatch(updateComments([]));
-    };
+      // clearing comments data from store when comments components unmounted!
+      return () => {
+        isIntersected = false;
+        dispatch(updateComments([]));
+      };
+    }
   }, []);
 
   return (

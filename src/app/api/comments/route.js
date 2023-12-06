@@ -47,10 +47,16 @@ export const POST = async (req) => {
     let comment = await prisma.Comment.create({
       data: { ...body, userEmail: session.user.email },
     });
-    comment = await prisma.Comment.findUnique({
-      where: { id: comment.id },
-      include: { user: true },
-    });
+    [comment] = await prisma.$transaction([
+      prisma.Comment.findUnique({
+        where: { id: comment.id },
+        include: { user: true },
+      }),
+      prisma.Post.update({
+        where: { slug: comment.postSlug },
+        data: { commentsCount: { increment: 1 } },
+      }),
+    ]);
     return Response("Your Comment is added", 200, true, false, { comment });
   } catch (error) {
     return Response("Something went wrong!", 500, false, error);
@@ -73,12 +79,16 @@ export const DELETE = async (req) => {
 
   if (!id) Response("Comment Id not passed with params!", 405, false, true);
   try {
-    await prisma.Comment.delete(
+    const comment = await prisma.Comment.delete(
       {
         where: { id },
       },
       { new: true }
     );
+    await prisma.Post.update({
+      where: { slug: comment.postSlug },
+      data: { commentsCount: { increment: -1 } },
+    });
 
     return Response("Comment deleted", 200, true, false);
   } catch (error) {

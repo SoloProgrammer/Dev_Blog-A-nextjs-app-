@@ -50,7 +50,7 @@ const SingleBlogPage = async ({ params }) => {
             dangerouslySetInnerHTML={{ __html: post.desc }}
           />
         </div>
-        <Comments postSlug={post.slug} />
+        <Comments postSlug={post.slug} commentsCount={post?.commentsCount} />
       </div>
       <div className={styles.Menu}>
         <Menu />

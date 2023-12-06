@@ -30,12 +30,12 @@
 
 .editActions span,
 .replyActions span {
-    padding: 3px;
+    padding: 4.5px;
     border-radius: .2rem;
     background: rgba(0, 0, 0, .1);
     border: 1px solid var(--bg-light);
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .editActions span:hover, .replyActions span:hover {

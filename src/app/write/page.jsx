@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./writePage.module.css";
 import "react-quill/dist/quill.bubble.css";
 import { ThemeStates } from "@/context/ThemeContext";
@@ -17,11 +17,28 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import dynamic from "next/dynamic";
+import { api } from "@/utils/api";
+import { updateCategories } from "@/redux/slices/cayegoriesSlice";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Writepage = () => {
   const [value, setValue] = useState("");
   const [title, setTile] = useState("");
+  const [categories, setCategories] = useState(null);
+
+  const getCategories = async () => {
+    const res = await fetch(api.getCategories(), { cache: "no-store" });
+    if (!res.ok) {
+      throw new Error("Failed!");
+    }
+    let { categories } = await res.json();
+    setCategories(categories);
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const { theme } = ThemeStates();
 
   const { status } = useSession();
@@ -35,9 +52,8 @@ const Writepage = () => {
   const [open, setOpen] = useState(false);
   const [showImgDropZone, setShowImgDropZone] = useState(false);
 
-  const [age, setAge] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [img, setImg] = useState("");
-  const handleChange = () => {};
   const openImageDropZone = () => {
     setShowImgDropZone(true);
   };
@@ -97,13 +113,17 @@ const Writepage = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
+                value={selectedCategory || ""}
                 label="Category"
-                onChange={handleChange}
+                onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                <MenuItem value={10}>Category</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {categories.map((cat) => {
+                  return (
+                    <MenuItem value={cat.title} key={cat.id}>
+                      {cat.title}
+                    </MenuItem>
+                  );
+                })}
               </Select>
             </FormControl>
             <button
