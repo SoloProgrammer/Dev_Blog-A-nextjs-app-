@@ -41,18 +41,18 @@ const SingleComment = ({ comment }) => {
 
   const handleEdit = () => {
     setEdit(true);
-    setValue(comment.desc);
   };
 
   const handleSave = async () => {
     let trimedValue = getTrimmedValue(value);
+    console.log("trimedValue",trimedValue);
     setValue(trimedValue);
     if (trimedValue !== comment.desc) {
       // updating comments in redux store
       dispatch(updateComment({ commentId: comment.id, desc: value }));
       setEdit(false);
 
-      // updating commnets on server
+      // updating commnet on server
       let options = {
         method: "PUT",
         body: JSON.stringify({ desc: trimedValue }),
@@ -137,6 +137,7 @@ const SingleComment = ({ comment }) => {
           maxRows={5}
           handleSave={handleSave}
           handleCancel={handleCancel}
+          key={comment?.id}
         />
       )}
       {reply && (

@@ -1,4 +1,5 @@
 import prisma from "@/utils/connect";
+import { Response } from "@/utils/responses";
 import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
@@ -14,6 +15,9 @@ export const GET = async (req) => {
     where: {
       ...(category && { catSlug: category }),
     },
+    orderBy: {
+      createdAt: 'desc'
+    }
   };
   try {
     const [posts, postsCount] = await prisma.$transaction([

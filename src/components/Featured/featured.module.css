@@ -7,11 +7,16 @@
     margin: 20px 0;
     font-weight: 300 !important;
 }
-
+.featuredText{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--softTextColor);
+}
 .post {
     display: flex;
     gap: 50px;
-    align-items: center;
+    align-items: center
 }
 
 

@@ -74,6 +74,7 @@ model Post {
   desc          String
   img           String?
   views         Int       @default(0)
+  isFeatured    Boolean   @default(false)
   catSlug       String
   commentsCount Int       @default(0)
   createdAt     DateTime  @default(now())

@@ -1,6 +1,5 @@
-import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import styles from './saveCancelEditor.module.css'
+import styles from "./saveCancelEditor.module.css";
 import { SaveIcon, XMarkIcon } from "@/GoogleIcons/Icons";
 
 const SaveCancelEditor = ({

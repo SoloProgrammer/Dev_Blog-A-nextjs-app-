@@ -88,6 +88,9 @@
     background: rgb(6, 160, 6);
     cursor: pointer;
     transition: background .2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .publish_btn:hover {
@@ -113,7 +116,8 @@
 
 .quillTextArea {
     min-height: 300px;
-    max-height: 500px;
+    /* max-height: 500px; */
+    max-height: 1500px;
     flex: 4;
 }
 
@@ -167,12 +171,10 @@
 
 @media screen and (max-width:640px) {
 
-
     .publish_btn {
-        position: fixed;
-        top: 75px;
-        right: 10px;
-        font-size: .9rem;
+        position: absolute;
+        top: -117px;
+        right: 5px;
     }
 
     .titleInput {
@@ -197,5 +199,8 @@
 
     .extraTools {
         gap: 15px;
+    }
+    .quillTextArea{
+        max-height: fit-content;
     }
 }

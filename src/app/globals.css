@@ -89,7 +89,8 @@ a {
 
 .ql-container {
   font-size: 28px !important;
-  max-height: 500px !important;
+  /* max-height: 500px !important; */
+  max-height: auto !important;
   overflow: auto !important;
 }
 

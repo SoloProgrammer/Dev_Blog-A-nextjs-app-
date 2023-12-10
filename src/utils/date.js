@@ -9,7 +9,7 @@ export const getFormattedTime = (date) => {
     const timeFormat = `${(24 - hour) < 12 ? 'PM' : 'AM'}`
 
     return `
-    ${hour > 12 ? (hour - 12 < 10 ? `0${hour - 12}` : hour - 12) : hour < 10 ? `0${hour - 12}` : hour}:${Min >= 10 ? Min : `0${Min}`} ${timeFormat}`
+    ${hour > 12 ? (hour - 12 < 10 ? `0${hour - 12}` : hour - 12) : hour < 10 ? hour === 0 ? `12` : `0${hour - 12}` : hour}:${Min >= 10 ? Min : `0${Min}`} ${timeFormat}`
 }
 
 export const getFormattedPostDate = (date, requiresTime = false) => {

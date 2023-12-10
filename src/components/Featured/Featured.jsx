@@ -2,8 +2,21 @@ import React from "react";
 import styles from "./featured.module.css";
 import Image from "next/image";
 import Commonbtn from "../Commonbtn/Commonbtn";
+import axios from "axios";
+import { api } from "@/utils/api";
+import { getTrimmedPostDesc } from "../BlogCard/BlogCard";
+import Link from "next/link";
 
-const Featured = () => {
+const getData = async () => {
+  const response = await axios.get(api.getFeaturedPost());
+  if (response.statusText !== "OK") {
+    throw { Error: "Failed" };
+  }
+  return response.data.post[0];
+};
+
+const Featured = async () => {
+  const post = await getData();
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -13,19 +26,21 @@ const Featured = () => {
       </h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>
-          <Image src={"/p1.jpg"} priority={false}  fill alt="post1" />
+          <Image src={post?.img} priority={false} fill alt="post1" />
         </div>
         <div className={styles.content}>
-          <h1 className={styles.postTitle}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          </h1>
-          <p className={styles.postDesc}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error,
-            aperiam! Est, excepturi? Nisi dolor eveniet labore, maiores ipsa
-            pariatur suscipit aliquid vitae aperiam quidem veniam exercitationem
-            unde ea sequi autem!
-          </p>
-          <Commonbtn text={"Read more"} />
+          <span className={styles.featuredText}>
+            <span class="material-symbols-outlined">editor_choice</span>
+            <i>Featured</i>
+          </span>
+          <h1 className={styles.postTitle}>{post?.title}</h1>
+          <p
+            className={styles.postDesc}
+            dangerouslySetInnerHTML={{ __html: getTrimmedPostDesc(post?.desc) }}
+          />
+          <Link href={`/posts/${post.slug}`}>
+            <Commonbtn text={"Read more"} />
+          </Link>
         </div>
       </div>
     </div>

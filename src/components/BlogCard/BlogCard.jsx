@@ -6,6 +6,11 @@ import Link from "next/link";
 import { getFormattedPostDate } from "@/utils/date";
 import SavePostIcon from "../SavePostIcon/SavePostIcon";
 
+export function getTrimmedPostDesc(desc) {
+  const DESC_LEN = desc.length;
+  return `${desc.slice(0, 210)} ${DESC_LEN > 210 ? " ..." : ""}`;
+}
+
 const BlogCard = ({ post, showBtn = true }) => {
   const icon = (
     <span style={{ fontSize: ".9rem" }} className="material-symbols-outlined">
@@ -13,10 +18,6 @@ const BlogCard = ({ post, showBtn = true }) => {
     </span>
   );
 
-  function getTrimmedPostDesc(desc) {
-    const DESC_LEN = desc.length;
-    return `${desc.slice(0, 210)} ${DESC_LEN > 210 ? " ..." : ""}`;
-  }
 
   return (
     <div className={styles.post}>

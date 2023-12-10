@@ -17,43 +17,43 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import dynamic from "next/dynamic";
-import { api } from "@/utils/api";
 import { updateCategories } from "@/redux/slices/cayegoriesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "@/utils/services";
+import axios from "axios";
+import { api } from "@/utils/api";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Writepage = () => {
-  const [value, setValue] = useState("");
+  const [body, setBody] = useState("");
   const [title, setTile] = useState("");
-  const [categories, setCategories] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [showImgDropZone, setShowImgDropZone] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [img, setImg] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const getCategories = async () => {
-    const res = await fetch(api.getCategories(), { cache: "no-store" });
-    if (!res.ok) {
-      throw new Error("Failed!");
-    }
-    let { categories } = await res.json();
-    setCategories(categories);
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
+  const { categories } = useSelector((state) => state.categories);
 
   const { theme } = ThemeStates();
 
   const { status } = useSession();
 
+  const dispatch = useDispatch();
+
+  if (!categories) {
+    getCategories()
+      .then((data) => dispatch(updateCategories(data)))
+      .catch(console.log);
+  }
+
   const router = useRouter();
 
   const emptyData = "<p><br></p>";
   const handleValueChange = (e) => {
-    e !== emptyData ? setValue(e) : setValue(null);
+    e !== emptyData ? setBody(e) : setBody(null);
   };
-  const [open, setOpen] = useState(false);
-  const [showImgDropZone, setShowImgDropZone] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [img, setImg] = useState("");
   const openImageDropZone = () => {
     setShowImgDropZone(true);
   };
@@ -77,6 +77,35 @@ const Writepage = () => {
   if (status === "unauthenticated") {
     return router.push("/");
   }
+
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const handlePublish = async () => {
+    setLoading(true);
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const reqbody = {
+      title,
+      desc: body,
+      catSlug: selectedCategory,
+      slug: slugify(title),
+      img: img.url,
+    };
+
+    const res = await axios.post(api.createPost(), reqbody, { headers });
+    if (res.status !== 201) {
+      setLoading(false);
+      throw new Error(res.response.data.message);
+    }
+    router.push(`/posts/${slugify(title)}`);
+  };
 
   return (
     <div className={styles.container}>
@@ -108,31 +137,45 @@ const Writepage = () => {
             </div>
           </div>
           <div className={styles.right}>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={selectedCategory || ""}
-                label="Category"
-                onChange={(e) => setSelectedCategory(e.target.value)}
+            {categories && (
+              <FormControl
+                error={title && body && !selectedCategory}
+                sx={{ m: 1, minWidth: 120 }}
+                size="small"
               >
-                {categories.map((cat) => {
-                  return (
-                    <MenuItem value={cat.title} key={cat.id}>
-                      {cat.title}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+                <InputLabel
+                  error={title && body && !selectedCategory}
+                  id="demo-simple-select-label"
+                >
+                  Category
+                </InputLabel>
+                <Select
+                  error={title && body && !selectedCategory}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedCategory || ""}
+                  label="Category"
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  {categories?.map((cat) => {
+                    return (
+                      <MenuItem value={cat.title} key={cat.id}>
+                        {cat.title}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            )}
             <button
-              disabled={!value || !title}
+              onClick={handlePublish}
+              disabled={!body || !title || !selectedCategory || loading}
               className={`${styles.publish_btn} ${
                 theme === "dark" ? styles.dark : styles.light
               }`}
             >
               Publish
+              {loading && <Loader size="mini" />}
             </button>
           </div>
         </div>
@@ -148,7 +191,7 @@ const Writepage = () => {
           <ReactQuill
             className={styles.quillTextArea}
             theme="bubble"
-            value={value}
+            value={body}
             onChange={handleValueChange}
             placeholder="Tell your story"
           />

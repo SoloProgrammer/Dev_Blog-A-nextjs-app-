@@ -3,6 +3,7 @@ import prisma from "@/utils/connect";
 import { Response } from "@/utils/responses";
 import { NextResponse } from "next/server";
 
+// CREATE A REPLY
 export const POST = async (req, { params }) => {
   const { id } = params;
   const session = await getAuthSession();
@@ -43,6 +44,7 @@ export const POST = async (req, { params }) => {
   }
 };
 
+// GET ALL REPLIES
 export const GET = async (_, { params }) => {
   try {
     const { id } = params;
@@ -65,6 +67,7 @@ export const GET = async (_, { params }) => {
   }
 };
 
+// DELETE A REPLY
 export const DELETE = async (req, { params }) => {
   const session = await getAuthSession();
   if (!session) return Response("Not authenticated", 401, false, true);
@@ -92,6 +95,7 @@ export const DELETE = async (req, { params }) => {
   }
 };
 
+// UPDATE A REPLY
 export const PUT = async (req) => {
   const session = await getAuthSession();
   if (!session) return Response("Not authenticated", 401, false, true);

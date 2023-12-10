@@ -11,6 +11,7 @@ import Loader from "../Loader/Loader";
 
 const SavePostIcon = ({ slug, postId }) => {
   const { user, loading } = useSelector((state) => state.auth);
+  
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,8 +38,7 @@ const SavePostIcon = ({ slug, postId }) => {
     };
     await fetch(api.savePost(slug), options);
   };
-
-  if (loading) return;
+  if (loading) return <></>;
 
   return (
     <div

@@ -14,6 +14,12 @@ export const api = {
     getPosts: (query) => {
         return `${server.URL}/api/posts${query}`
     },
+    createPost: () => {
+        return `${server.URL}/api/posts/create`
+    },
+    getFeaturedPost: () => {
+        return `${server.URL}/api/posts/featured`
+    },
     getSinglePost: (slug) => {
         return `${server.URL}/api/posts/${slug}`
     },

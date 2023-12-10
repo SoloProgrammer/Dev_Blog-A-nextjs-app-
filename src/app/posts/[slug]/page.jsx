@@ -6,6 +6,7 @@ import Comments from "@/components/Comments/Comments";
 import { api } from "@/utils/api";
 import { getFormattedPostDate } from "@/utils/date";
 import SavePostIcon from "@/components/SavePostIcon/SavePostIcon";
+import { notFound } from "next/navigation";
 
 const getSinglePost = async (slug) => {
   const res = await fetch(api.getSinglePost(slug), { cache: "no-cache" });
@@ -18,9 +19,12 @@ const getSinglePost = async (slug) => {
 const SingleBlogPage = async ({ params }) => {
   const { slug } = params;
   const { post } = await getSinglePost(slug);
+  if (!post) notFound();
+
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.top}>
           <div className={styles.user}>
             <div className={styles.userImg}>
@@ -44,7 +48,6 @@ const SingleBlogPage = async ({ params }) => {
           <Image src={post.img} priority={false} fill alt="post_Img" />
         </div>
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>{post.title}</h1>
           <div
             className={styles.desc}
             dangerouslySetInnerHTML={{ __html: post.desc }}
