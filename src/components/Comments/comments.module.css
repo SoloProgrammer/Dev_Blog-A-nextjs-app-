@@ -1,6 +1,5 @@
-.container {
-    padding: 20px;
-}
+/* Empty container class is needed to monitor the comments container is in the user view section or not! - Do not remmove the below classname */
+.container{} 
 
 .title {
     color: var(--softTextColor);
