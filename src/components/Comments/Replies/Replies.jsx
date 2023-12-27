@@ -62,7 +62,9 @@ const SingleReply = ({ reply, commentId }) => {
     if (trimmedValue === reply.desc) return;
 
     // updating reply on client side/in Redux Store
-    dispatch(updateReply({ commentId, replyId: reply.id, newDesc: trimmedValue }));
+    dispatch(
+      updateReply({ commentId, replyId: reply.id, newDesc: trimmedValue })
+    );
 
     // updating reply on server side
     const options = {
@@ -72,46 +74,49 @@ const SingleReply = ({ reply, commentId }) => {
     const query = `?replyId=${reply.id}`;
     await fetch(api.updateReply(commentId, query), options);
   };
+
   const handleCancel = () => setEdit(false);
 
   return (
-    <div key={reply.id} className={styles.reply}>
-      <div className={styles.seperator}>
-        <div className={styles.userInfo}>
-          <div className={styles.userAvatar}>
-            <Image src={reply.user.image} fill alt={"Avatar"} />
+    <>
+      <div key={reply.id} className={styles.reply}>
+        <div className={styles.seperator}>
+          <div className={styles.userInfo}>
+            <div className={styles.userAvatar}>
+              <Image src={reply.user.image} fill alt={"Avatar"} />
+            </div>
+            <div className={styles.userName}>
+              <span className={styles.uName}>{reply.user.name}</span>
+              <span className={styles.replyDate}>
+                {getFormattedPostDate(reply.createdAt, true)}
+              </span>
+            </div>
           </div>
-          <div className={styles.userName}>
-            <span className={styles.uName}>{reply.user.name}</span>
-            <span className={styles.replyDate}>
-              {getFormattedPostDate(reply.createdAt, true)}
-            </span>
-          </div>
+          {user?.id === reply?.user?.id && (
+            <div className={styles.actions}>
+              <DelEditActions
+                loading={loading}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            </div>
+          )}
         </div>
-        {user?.id === reply?.user?.id && (
-          <div className={styles.actions}>
-            <DelEditActions
-              loading={loading}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-            />
-          </div>
+        {!edit ? (
+          <div className={styles.replyDesc}>{reply.desc}</div>
+        ) : (
+          <SaveCancelEditor
+            value={value}
+            autoFocus={edit}
+            selectionStartRange={reply.desc.length}
+            selectionEndRange={reply.desc.length}
+            maxRows={5}
+            onChangeHandler={onChangeHandler}
+            handleSave={handleSave}
+            handleCancel={handleCancel}
+          />
         )}
       </div>
-      {!edit ? (
-        <div className={styles.replyDesc}>{reply.desc}</div>
-      ) : (
-        <SaveCancelEditor
-          value={value}
-          autoFocus={edit}
-          selectionStartRange={reply.desc.length}
-          selectionEndRange={reply.desc.length}
-          maxRows={5}
-          onChangeHandler={onChangeHandler}
-          handleSave={handleSave}
-          handleCancel={handleCancel}
-        />
-      )}
-    </div>
+    </>
   );
 };

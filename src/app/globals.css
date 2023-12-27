@@ -14,6 +14,7 @@
   --bg: #0f172a;
   --textColor: #ddd;
   --softBg: #1f273a;
+  --lightBG: #121d3a;
   --shadow-light: 0 0 5px var(--bg-light);
   --bg-lighter: rgba(255, 255, 255, .025);
   --bg-light: rgba(255, 255, 255, .1);
@@ -112,9 +113,11 @@ a {
   margin: 0 !important;
 
 }
-.MuiMenuItem-root{
+
+.MuiMenuItem-root {
   min-height: 35px !important;
 }
+
 @media screen and (max-width:1536px) {}
 
 @media screen and (max-width:1280px) {

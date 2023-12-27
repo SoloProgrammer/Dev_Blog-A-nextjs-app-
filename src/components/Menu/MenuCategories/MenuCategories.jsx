@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./menuCategories.module.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCategories } from "@/redux/slices/cayegoriesSlice";
+import { updateCategories } from "@/redux/slices/categoriesSlice";
 import { getCategories } from "@/utils/services";
 
 const MenuCategories = () => {

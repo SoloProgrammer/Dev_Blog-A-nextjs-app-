@@ -10,14 +10,12 @@ export function getTrimmedPostDesc(desc) {
   const DESC_LEN = desc.length;
   return `${desc.slice(0, 210)} ${DESC_LEN > 210 ? " ..." : ""}`;
 }
-
 const BlogCard = ({ post, showBtn = true }) => {
   const icon = (
     <span style={{ fontSize: ".9rem" }} className="material-symbols-outlined">
       arrow_forward
     </span>
   );
-
 
   return (
     <div className={styles.post}>
@@ -34,8 +32,10 @@ const BlogCard = ({ post, showBtn = true }) => {
           </div>
           <SavePostIcon slug={post.slug} postId={post.id} />
         </div>
-        <Link href={`/posts/${post.slug}`}>
-          <h3 style={{marginBottom:'1rem'}} className={styles.postTitle}>{post.title}</h3>
+        <Link href={`/posts/${post.slug}`} style={{ flexGrow: 1 }}>
+          <h3 style={{ marginBottom: "1rem" }} className={styles.postTitle}>
+            {post.title}
+          </h3>
           <p
             className={styles.postDesc}
             dangerouslySetInnerHTML={{ __html: getTrimmedPostDesc(post.desc) }}

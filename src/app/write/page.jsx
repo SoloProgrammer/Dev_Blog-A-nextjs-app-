@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import dynamic from "next/dynamic";
-import { updateCategories } from "@/redux/slices/cayegoriesSlice";
+import { updateCategories } from "@/redux/slices/categoriesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "@/utils/services";
 import axios from "axios";
@@ -198,7 +198,7 @@ const Writepage = () => {
         </div>
       </div>
       {showImgDropZone && (
-        <Modal setShowImgDropZone={setShowImgDropZone}>
+        <Modal handleHide={() => setShowImgDropZone(false)}>
           <ImageDropZone
             handleSetImg={handleSetImg}
             hideImgDropZone={hideImgDropZone}

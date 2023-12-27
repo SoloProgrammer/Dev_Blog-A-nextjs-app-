@@ -1,4 +1,6 @@
-.container {}
+.container {
+    padding: 20px;
+}
 
 .title {
     color: var(--softTextColor);

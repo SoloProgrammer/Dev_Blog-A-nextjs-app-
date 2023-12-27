@@ -7,6 +7,7 @@ import { api } from "@/utils/api";
 import { getFormattedPostDate } from "@/utils/date";
 import SavePostIcon from "@/components/SavePostIcon/SavePostIcon";
 import { notFound } from "next/navigation";
+import SideDrawer from "@/components/SideDrawer/SideDrawer";
 
 const getSinglePost = async (slug) => {
   const res = await fetch(api.getSinglePost(slug), { cache: "no-cache" });

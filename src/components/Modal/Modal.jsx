@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./modal.module.css";
 
-const Modal = ({ children, setShowImgDropZone }) => {
+const Modal = ({ children, handleHide }) => {
   const [show, setShow] = useState(false);
   useEffect(() => {
     !show &&
@@ -14,8 +14,8 @@ const Modal = ({ children, setShowImgDropZone }) => {
   return (
     <div
       onClick={() => {
-        setShow(false)
-        setShowImgDropZone(false)
+        setShow(false);
+        handleHide();
       }}
       className={`${styles.container} ${show ? styles.show : ""}`}
     >

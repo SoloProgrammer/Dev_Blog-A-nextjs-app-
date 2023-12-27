@@ -14,6 +14,9 @@ import { updateComments, updateComment } from "@/redux/slices/commentsSlice";
 import { ReplyIcon } from "@/GoogleIcons/Icons";
 import DelEditActions from "@/components/Actions/DelEditActions";
 import SaveCancelEditor from "@/components/SaveCancelEditor/SaveCancelEditor";
+import ConfirmDeleteModal from "@/components/Modal/Modal";
+import Loader from "@/components/Loader/Loader";
+import CrfmDelAlertBox from "@/components/CrfmDelAlertBox/CrfmDelAlertBox";
 
 export const getTrimmedValue = (value) => value.replaceAll(/\s+/g, " ").trim();
 
@@ -45,7 +48,6 @@ const SingleComment = ({ comment }) => {
 
   const handleSave = async () => {
     let trimedValue = getTrimmedValue(value);
-    console.log("trimedValue",trimedValue);
     setValue(trimedValue);
     if (trimedValue !== comment.desc) {
       // updating comments in redux store
@@ -93,71 +95,95 @@ const SingleComment = ({ comment }) => {
     setValue(e.target.value);
   }
 
+  const [showDelModal, setShowDelModal] = useState(false);
+
+  const handleCloseConfirmDelModal = () => setShowDelModal(false);
+
   return (
-    <div className={styles.container}>
-      <div className={styles.seperator}>
-        <div className={styles.userInfo}>
-          <div className={styles.userAvatar}>
-            <Image
-              src={comment?.user?.image}
-              priority={false}
-              fill
-              alt="avatar"
-            />
+    <>
+      <div className={styles.container}>
+        <div className={styles.seperator}>
+          <div className={styles.userInfo}>
+            <div className={styles.userAvatar}>
+              <Image
+                src={comment?.user?.image}
+                priority={false}
+                fill
+                alt="avatar"
+              />
+            </div>
+            <div className={styles.userText}>
+              <span className={styles.userName}>{comment?.user?.name}</span>
+              <span className={styles.date}>
+                {getFormattedPostDate(comment?.createdAt, true)}
+              </span>
+            </div>
           </div>
-          <div className={styles.userText}>
-            <span className={styles.userName}>{comment?.user?.name}</span>
-            <span className={styles.date}>
-              {getFormattedPostDate(comment?.createdAt, true)}
-            </span>
-          </div>
+          {user && comment.user.id === user?.id ? (
+            <div className={styles.actions}>
+              <DelEditActions
+                loading={loading}
+                handleDelete={() => setShowDelModal(true)}
+                handleEdit={handleEdit}
+              />
+            </div>
+          ) : (
+            <div onClick={handleReply} className={styles.actions}>
+              <ReplyIcon />
+            </div>
+          )}
         </div>
-        {user && comment.user.id === user?.id ? (
-          <div className={styles.actions}>
-            <DelEditActions
-              loading={loading}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-            />
-          </div>
-        ) : (
-          <div onClick={handleReply} className={styles.actions}>
-            <ReplyIcon />
+        {!edit && <p className={styles.commentText}>{comment.desc}</p>}
+        {edit && (
+          <SaveCancelEditor
+            value={value}
+            onChangeHandler={onChangeHandler}
+            selectionStartRange={comment.desc.length}
+            selectionEndRange={comment.desc.length}
+            autoFocus={edit}
+            maxRows={5}
+            handleSave={handleSave}
+            handleCancel={handleCancel}
+            key={comment?.id}
+          />
+        )}
+        {reply && (
+          <AddreplyTextarea
+            handleCancel={handleCancel}
+            commentId={comment.id}
+          />
+        )}
+        {comment.replyCount > 0 && (
+          <ReplyCount
+            count={comment.replyCount}
+            comment={comment}
+            setReply={setReply}
+            setShowReplies={setShowReplies}
+            showreplies={showreplies}
+          />
+        )}
+        {comment.replies && showreplies && (
+          <div
+            ref={repliesContainerRef}
+            className={`${styles.repliesContainer}`}
+          >
+            <Replies commentId={comment.id} replies={comment.replies} />
           </div>
         )}
       </div>
-      {!edit && <p className={styles.commentText}>{comment.desc}</p>}
-      {edit && (
-        <SaveCancelEditor
-          value={value}
-          onChangeHandler={onChangeHandler}
-          selectionStartRange={comment.desc.length}
-          selectionEndRange={comment.desc.length}
-          autoFocus={edit}
-          maxRows={5}
-          handleSave={handleSave}
-          handleCancel={handleCancel}
-          key={comment?.id}
-        />
+      {showDelModal && (
+        <ConfirmDeleteModal handleHide={handleCloseConfirmDelModal}>
+          <CrfmDelAlertBox
+            title={"Delete comment!"}
+            desc={"Are you sure you wnat to delete the comment?"}
+            btnText={"Delete"}
+            handleCancel={handleCloseConfirmDelModal}
+            handleSubmit={handleDelete}
+            loading={loading}
+          />
+        </ConfirmDeleteModal>
       )}
-      {reply && (
-        <AddreplyTextarea handleCancel={handleCancel} commentId={comment.id} />
-      )}
-      {comment.replyCount > 0 && (
-        <ReplyCount
-          count={comment.replyCount}
-          comment={comment}
-          setReply={setReply}
-          setShowReplies={setShowReplies}
-          showreplies={showreplies}
-        />
-      )}
-      {comment.replies && showreplies && (
-        <div ref={repliesContainerRef} className={`${styles.repliesContainer}`}>
-          <Replies commentId={comment.id} replies={comment.replies} />
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

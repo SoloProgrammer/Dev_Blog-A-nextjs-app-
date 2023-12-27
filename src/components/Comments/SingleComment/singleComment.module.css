@@ -79,12 +79,14 @@
 .commentText {
     margin-left: 3rem;
 }
-.repliesContainer{
+
+.repliesContainer {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows .2s;
 }
-.repliesContainer.active{
+
+.repliesContainer.active {
     grid-template-rows: 1fr;
 }
 
