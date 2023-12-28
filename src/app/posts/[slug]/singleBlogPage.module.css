@@ -2,11 +2,12 @@
     margin-top: 30px;
     display: flex;
     gap: 50px;
+    scroll-behavior: smooth !important;
 }
 
 .infoContainer {
     display: flex;
-    gap: 40px;
+    gap: 35px;
     flex-direction: column;
     flex: 5;
 }
@@ -98,6 +99,9 @@
 }
 
 @media screen and (max-width:640px) {
+    .infoContainer{
+        gap: 30px;
+    }
     .imgContainer {
         height: auto;
         max-height: 400px !important;

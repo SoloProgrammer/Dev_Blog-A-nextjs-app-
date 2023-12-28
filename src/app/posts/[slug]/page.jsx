@@ -7,7 +7,7 @@ import { api } from "@/utils/api";
 import { getFormattedPostDate } from "@/utils/date";
 import SavePostIcon from "@/components/SavePostIcon/SavePostIcon";
 import { notFound } from "next/navigation";
-import SideDrawer from "@/components/SideDrawer/SideDrawer";
+import ExtraActions from "@/components/ExtraActions/ExtraActions";
 
 const getSinglePost = async (slug) => {
   const res = await fetch(api.getSinglePost(slug), { cache: "no-cache" });
@@ -45,6 +45,7 @@ const SingleBlogPage = async ({ params }) => {
           </div>
           <SavePostIcon slug={slug} postId={post.id} />
         </div>
+        <ExtraActions commentsCount={post?.commentsCount}/>
         <div className={styles.imgContainer}>
           <Image src={post.img} priority={false} fill alt="post_Img" />
         </div>
@@ -54,7 +55,9 @@ const SingleBlogPage = async ({ params }) => {
             dangerouslySetInnerHTML={{ __html: post.desc }}
           />
         </div>
-        <Comments postSlug={post.slug} commentsCount={post?.commentsCount} />
+        <div id="comments">
+          <Comments postSlug={post.slug} commentsCount={post?.commentsCount} />
+        </div>
       </div>
       <div className={styles.Menu}>
         <Menu />

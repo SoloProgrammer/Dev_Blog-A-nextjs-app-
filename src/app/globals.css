@@ -23,6 +23,9 @@
   --successBgColor: #1C3329;
 }
 
+body{
+  scroll-behavior: smooth;
+}
 
 .LoadingContainer {
   min-height: 70dvh;

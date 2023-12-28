@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./writePage.module.css";
 import "react-quill/dist/quill.bubble.css";
 import { ThemeStates } from "@/context/ThemeContext";

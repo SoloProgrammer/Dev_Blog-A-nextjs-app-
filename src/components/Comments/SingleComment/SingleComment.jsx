@@ -17,6 +17,7 @@ import SaveCancelEditor from "@/components/SaveCancelEditor/SaveCancelEditor";
 import ConfirmDeleteModal from "@/components/Modal/Modal";
 import Loader from "@/components/Loader/Loader";
 import CrfmDelAlertBox from "@/components/CrfmDelAlertBox/CrfmDelAlertBox";
+import useModal from "@/Hooks/useModal";
 
 export const getTrimmedValue = (value) => value.replaceAll(/\s+/g, " ").trim();
 
@@ -94,10 +95,8 @@ const SingleComment = ({ comment }) => {
   function onChangeHandler(e) {
     setValue(e.target.value);
   }
-
-  const [showDelModal, setShowDelModal] = useState(false);
-
-  const handleCloseConfirmDelModal = () => setShowDelModal(false);
+  const [showDelModal, setShowDelModal, handleCloseConfirmDelModal] =
+    useModal();
 
   return (
     <>
@@ -172,7 +171,10 @@ const SingleComment = ({ comment }) => {
         )}
       </div>
       {showDelModal && (
-        <ConfirmDeleteModal handleHide={handleCloseConfirmDelModal}>
+        <ConfirmDeleteModal
+          handleHide={handleCloseConfirmDelModal}
+          isCloseable={!loading}
+        >
           <CrfmDelAlertBox
             title={"Delete comment!"}
             desc={"Are you sure you wnat to delete the comment?"}

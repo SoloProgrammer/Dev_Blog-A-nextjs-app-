@@ -57,7 +57,7 @@ const AddreplyTextarea = ({ handleCancel, commentId }) => {
             disabled={!getTrimmedValue(desc) || loading}
             className={styles.saveReplyBtn}
           >
-            Save {loading && <Loader size="mini" />}
+            Save {loading && <Loader size="tooMini" />}
           </button>
           <XMarkIcon classes={['icon cancelIcon']} handleFunc={handleCancel}/>
         </div>

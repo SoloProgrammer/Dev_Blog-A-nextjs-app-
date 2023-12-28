@@ -1,0 +1,43 @@
+.extraActionsContainer {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--softBg);
+    padding: 10px 5px;
+    border-bottom: 1px solid var(--softBg);
+    align-items: center;
+}
+
+.subBtn button {
+    padding: 5px 20px;
+    border-radius: 1rem;
+    font-weight: 500;
+    font-size: .8rem;
+    border: none;
+    color: white;
+    background: rgb(6, 160, 6);
+    cursor: pointer;
+    transition: background .2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.shareIcon{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    color: var(--softTextColor);
+}
+.shareIcon span{
+    cursor: pointer;
+}
+.shareIcon span:nth-child(1){
+
+}
+.shareIcon span:nth-child(2){
+    font-size: 1.4rem;
+    margin-top: .4rem;
+}
+.commentsCount{
+    font-size: .75em !important;
+}

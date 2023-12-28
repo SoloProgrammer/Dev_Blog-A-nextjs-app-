@@ -9,6 +9,9 @@ import { api } from "@/utils/api";
 import { deleteReply, updateReply } from "@/redux/slices/commentsSlice";
 import SaveCancelEditor from "@/components/SaveCancelEditor/SaveCancelEditor";
 import { getTrimmedValue } from "../SingleComment/SingleComment";
+import ConfirmDeleteModal from "@/components/Modal/Modal";
+import CrfmDelAlertBox from "@/components/CrfmDelAlertBox/CrfmDelAlertBox";
+import useModal from "@/Hooks/useModal";
 
 const Replies = ({ commentId, replies }) => {
   return (
@@ -77,6 +80,9 @@ const SingleReply = ({ reply, commentId }) => {
 
   const handleCancel = () => setEdit(false);
 
+  const [showDelModal, setShowDelModal, handleCloseConfirmDelModal] =
+    useModal();
+
   return (
     <>
       <div key={reply.id} className={styles.reply}>
@@ -96,7 +102,7 @@ const SingleReply = ({ reply, commentId }) => {
             <div className={styles.actions}>
               <DelEditActions
                 loading={loading}
-                handleDelete={handleDelete}
+                handleDelete={setShowDelModal}
                 handleEdit={handleEdit}
               />
             </div>
@@ -117,6 +123,21 @@ const SingleReply = ({ reply, commentId }) => {
           />
         )}
       </div>
+      {showDelModal && (
+        <ConfirmDeleteModal
+          handleHide={handleCloseConfirmDelModal}
+          isCloseable={!loading}
+        >
+          <CrfmDelAlertBox
+            title={"Delete reply!"}
+            desc={"Are you sure you want to delete the reply?"}
+            btnText={"Delete"}
+            handleCancel={handleCloseConfirmDelModal}
+            handleSubmit={handleDelete}
+            loading={loading}
+          />
+        </ConfirmDeleteModal>
+      )}
     </>
   );
 };

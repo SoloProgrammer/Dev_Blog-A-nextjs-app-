@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./modal.module.css";
 
-const Modal = ({ children, handleHide }) => {
+const Modal = ({ children, handleHide, isCloseable = true }) => {
   const [show, setShow] = useState(false);
   useEffect(() => {
     !show &&
@@ -11,12 +11,10 @@ const Modal = ({ children, handleHide }) => {
         setShow(true);
       }, 50);
   }, []);
+  console.log(show, isCloseable);
   return (
     <div
-      onClick={() => {
-        setShow(false);
-        handleHide();
-      }}
+      onClick={isCloseable ? handleHide : () => {}}
       className={`${styles.container} ${show ? styles.show : ""}`}
     >
       <div

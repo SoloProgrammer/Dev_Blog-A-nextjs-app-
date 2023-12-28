@@ -41,6 +41,9 @@
     color: #fff !important;
     background-color: rgb(11, 137, 239);
 }
+.actionBtns button:nth-child(1):hover{
+    background-color: rgb(52, 163, 254);
+}
 .actionBtns button:nth-child(2){
     border-color: rgb(212, 5, 5);
 }
@@ -54,6 +57,14 @@
 }
 .actionBtns button:nth-child(2):disabled:hover{
     background: transparent;
+}
+.actionBtns button:nth-child(1):disabled{
+    background: transparent;
+    color: var(--softTextColor) !important;
+}
+.actionBtns button:nth-child(1):disabled:hover{
+    background: transparent;
+    cursor: not-allowed;
 }
 
 

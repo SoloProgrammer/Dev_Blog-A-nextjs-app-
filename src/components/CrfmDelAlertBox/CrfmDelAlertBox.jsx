@@ -20,7 +20,7 @@ const CrfmDelAlertBox = ({
           <p>{desc}</p>
         </div>
         <div className={styles.actionBtns}>
-          <button className={styles.cancel} onClick={handleCancel}>
+          <button disabled={loading} className={styles.cancel} onClick={handleCancel}>
             Cancel
           </button>
           <button
