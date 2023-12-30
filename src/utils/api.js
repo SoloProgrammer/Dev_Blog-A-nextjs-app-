@@ -20,6 +20,9 @@ export const api = {
     getFeaturedPost: () => {
         return `${server.URL}/api/posts/featured`
     },
+    getPopularPosts:() =>{
+        return `${server.URL}/api/posts/popular`
+    },
     getSinglePost: (slug) => {
         return `${server.URL}/api/posts/${slug}`
     },

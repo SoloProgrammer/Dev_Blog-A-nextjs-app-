@@ -1,7 +1,7 @@
-import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/connect";
 import { Response } from "@/utils/responses";
 import { NextResponse } from "next/server";
+import { authenticate } from "@/middlewares/getAuthSession";
 
 // GET all comments of a post
 export const GET = async (req) => {
@@ -31,17 +31,10 @@ export const GET = async (req) => {
 };
 
 // CREATE A COMMENT
-export const POST = async (req) => {
+const createCommentHandler = async (req) => {
   // Authenticate user sessions on server side
 
-  const session = await getAuthSession();
-
-  if (!session) {
-    return new NextResponse(
-      JSON.stringify({ message: "Not Authenticated", status: 401 })
-    );
-  }
-
+  const { session } = req
   try {
     const body = await req.json();
     let comment = await prisma.Comment.create({
@@ -61,19 +54,11 @@ export const POST = async (req) => {
   } catch (error) {
     return Response("Something went wrong!", 500, false, error);
   }
-};
+}
+export const POST = authenticate(createCommentHandler);
 
 // DELETE A COMMENT
-
-export const DELETE = async (req) => {
-  const session = await getAuthSession();
-
-  if (!session) {
-    return new NextResponse(
-      JSON.stringify({ message: "Not Authenticated", status: 401 })
-    );
-  }
-
+const deleteCommentHandler = async (req) => {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 
@@ -94,20 +79,12 @@ export const DELETE = async (req) => {
   } catch (error) {
     return Response("Something went wrong!", 500, false, error);
   }
-};
+}
+export const DELETE = authenticate(deleteCommentHandler);
 
 // UPDATE A COMMENT
-
-export const PUT = async (req) => {
+const updateCommentHandler = async (req) => {
   // Authenticate user sessions on server side
-  const session = await getAuthSession();
-
-  if (!session) {
-    return new NextResponse(
-      JSON.stringify({ message: "Not Authenticated", status: 401 })
-    );
-  }
-
   try {
     const body = await req.json();
     const { searchParams } = new URL(req.url);
@@ -122,4 +99,5 @@ export const PUT = async (req) => {
   } catch (error) {
     return Response("Something went wrong!", 500, false, error);
   }
-};
+}
+export const PUT = authenticate(updateCommentHandler);

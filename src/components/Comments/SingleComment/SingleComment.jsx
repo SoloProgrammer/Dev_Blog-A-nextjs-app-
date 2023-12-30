@@ -15,7 +15,6 @@ import { ReplyIcon } from "@/GoogleIcons/Icons";
 import DelEditActions from "@/components/Actions/DelEditActions";
 import SaveCancelEditor from "@/components/SaveCancelEditor/SaveCancelEditor";
 import ConfirmDeleteModal from "@/components/Modal/Modal";
-import Loader from "@/components/Loader/Loader";
 import CrfmDelAlertBox from "@/components/CrfmDelAlertBox/CrfmDelAlertBox";
 import useModal from "@/Hooks/useModal";
 
@@ -177,7 +176,7 @@ const SingleComment = ({ comment }) => {
         >
           <CrfmDelAlertBox
             title={"Delete comment!"}
-            desc={"Are you sure you wnat to delete the comment?"}
+            desc={"Are you sure you want to delete the comment?"}
             btnText={"Delete"}
             handleCancel={handleCloseConfirmDelModal}
             handleSubmit={handleDelete}

@@ -1,7 +1,7 @@
 import prisma from "@/utils/connect";
 import { Response } from "@/utils/responses";
 
-export const GET = async (req) => {
+export const GET = async () => {
     try {
         const post = await prisma.Post.findMany({
             where: { isFeatured: true },

@@ -1,18 +1,11 @@
-import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/connect";
 import { Response } from "@/utils/responses";
-import { NextResponse } from "next/server";
+import { authenticate } from "@/middlewares/getAuthSession";
 
-// CREATE A REPLY
-export const POST = async (req, { params }) => {
+// CREATE A REPLY - need auth
+const createReplyHandler = async (req, { params }) => {
   const { id } = params;
-  const session = await getAuthSession();
-
-  if (!session) {
-    return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), {
-      status: 401,
-    });
-  }
+  const { session } = req;
 
   if (!id)
     return Response(
@@ -43,6 +36,7 @@ export const POST = async (req, { params }) => {
     return Response("Something went wrong!", 500, false, error);
   }
 };
+export const POST = authenticate(createReplyHandler);
 
 // GET ALL REPLIES
 export const GET = async (_, { params }) => {
@@ -67,11 +61,8 @@ export const GET = async (_, { params }) => {
   }
 };
 
-// DELETE A REPLY
-export const DELETE = async (req, { params }) => {
-  const session = await getAuthSession();
-  if (!session) return Response("Not authenticated", 401, false, true);
-
+// DELETE A REPLY - need auth
+const deleteReplyHandler = async (req, { params }) => {
   try {
     const { id } = params;
     const { searchParams } = new URL(req.url);
@@ -94,12 +85,10 @@ export const DELETE = async (req, { params }) => {
     return Response("Something went wrong!", 500, false, error);
   }
 };
+export const DELETE = authenticate(deleteReplyHandler);
 
-// UPDATE A REPLY
-export const PUT = async (req) => {
-  const session = await getAuthSession();
-  if (!session) return Response("Not authenticated", 401, false, true);
-
+// UPDATE A REPLY - need auth
+const updateReplyHandler = async (req) => {
   const { searchParams } = new URL(req.url);
   let replyId = searchParams.get("replyId");
 
@@ -118,3 +107,4 @@ export const PUT = async (req) => {
     return Response("Something went wrong!", 500, false, error);
   }
 };
+export const PUT = authenticate(updateReplyHandler);

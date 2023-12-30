@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import ExtraActions from "@/components/ExtraActions/ExtraActions";
 
 const getSinglePost = async (slug) => {
-  const res = await fetch(api.getSinglePost(slug), { cache: "no-cache" });
+  const res = await fetch(api.getSinglePost(slug), { cache: "no-store" });
   if (!res.ok) {
     throw new Error("Some error occured");
   }
@@ -45,7 +45,10 @@ const SingleBlogPage = async ({ params }) => {
           </div>
           <SavePostIcon slug={slug} postId={post.id} />
         </div>
-        <ExtraActions commentsCount={post?.commentsCount}/>
+        <ExtraActions
+          commentsCount={post?.commentsCount}
+          slug={post.slug}
+        />
         <div className={styles.imgContainer}>
           <Image src={post.img} priority={false} fill alt="post_Img" />
         </div>

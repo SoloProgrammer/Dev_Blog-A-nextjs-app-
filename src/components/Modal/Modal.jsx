@@ -11,7 +11,6 @@ const Modal = ({ children, handleHide, isCloseable = true }) => {
         setShow(true);
       }, 50);
   }, []);
-  console.log(show, isCloseable);
   return (
     <div
       onClick={isCloseable ? handleHide : () => {}}

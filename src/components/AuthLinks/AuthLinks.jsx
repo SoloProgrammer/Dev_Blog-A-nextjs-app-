@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./authLinks.module.css";
 import Link from "next/link";
 import Commonbtn from "../Commonbtn/Commonbtn";
 import { signOut } from "next-auth/react";

@@ -83,8 +83,10 @@
 }
 
 .detail {
-    font-size: .8rem;
+    font-size: .75rem;
     color: var(--softTextColor);
+    display: flex;
+    /* justify-content: flex-end; */
 }
 
 .user {
@@ -93,7 +95,7 @@
 }
 
 .date {
-    font-size: .8rem;
+    /* font-size: .8rem; */
 }
 
 @media screen and (max-width:1100px) {

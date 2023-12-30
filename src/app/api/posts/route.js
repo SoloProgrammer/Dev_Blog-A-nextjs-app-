@@ -1,7 +1,7 @@
 import prisma from "@/utils/connect";
-import { Response } from "@/utils/responses";
 import { NextResponse } from "next/server";
 
+// Get posts
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
 

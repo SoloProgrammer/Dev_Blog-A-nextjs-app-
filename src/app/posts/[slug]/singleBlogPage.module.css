@@ -12,6 +12,8 @@
     flex: 5;
 }
 
+
+
 .top {
     display: flex;
     justify-content: space-between;
@@ -99,9 +101,10 @@
 }
 
 @media screen and (max-width:640px) {
-    .infoContainer{
+    .infoContainer {
         gap: 30px;
     }
+
     .imgContainer {
         height: auto;
         max-height: 400px !important;

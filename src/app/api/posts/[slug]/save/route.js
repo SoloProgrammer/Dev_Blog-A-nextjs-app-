@@ -1,13 +1,11 @@
-import { getAuthSession } from "@/utils/auth";
+import { authenticate } from "@/middlewares/getAuthSession";
 import prisma from "@/utils/connect";
 import { Response } from "@/utils/responses";
 import { NextResponse } from "next/server";
 
-export const PUT = async (req, { params }) => {
-  const session = await getAuthSession();
-  if (!session) {
-    return Response("Not authenticated!", 401, false, true);
-  }
+// Save/Unsave post
+const saveUnsavePostHandler = async (req, { params }) => {
+  const { session } = req
 
   try {
     const { slug } = params;
@@ -61,4 +59,5 @@ export const PUT = async (req, { params }) => {
       })
     );
   }
-};
+}
+export const PUT = authenticate(saveUnsavePostHandler);

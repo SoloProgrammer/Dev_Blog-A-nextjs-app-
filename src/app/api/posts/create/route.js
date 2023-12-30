@@ -1,12 +1,10 @@
-import { getAuthSession } from "@/utils/auth";
+import { authenticate } from "@/middlewares/getAuthSession";
 import prisma from "@/utils/connect";
 import { Response } from "@/utils/responses";
 
-export const POST = async (req) => {
+const createPostHandler = async (req) => {
     try {
-        const session = await getAuthSession()
-        if (!session) return Response('Not Authenticated!', 401)
-
+        const { session } = req
         const body = await req.json()
         console.log(body);
         if (!body) return Response("Body not send with the req", 400)
@@ -22,3 +20,4 @@ export const POST = async (req) => {
         return Response("Some error occured", 500, false, error)
     }
 }
+export const POST = authenticate(createPostHandler)
