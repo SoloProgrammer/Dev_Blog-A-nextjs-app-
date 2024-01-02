@@ -28,9 +28,14 @@ const MenuPosts = async ({ withImg }) => {
             href={`/posts/${post.slug}`}
             className={styles.item}
           >
-            {withImg && (
+            {withImg && post.img && (
               <div className={styles.imgContainer}>
-                <Image src={"/p1.jpg"} priority={false} fill alt="blog_img" />
+                <Image
+                  src={`${post.img}`}
+                  priority={false}
+                  fill
+                  alt="blog_img"
+                />
               </div>
             )}
             <div className={styles.textContainer}>

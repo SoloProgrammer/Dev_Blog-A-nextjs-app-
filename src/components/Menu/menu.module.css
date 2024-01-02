@@ -11,13 +11,13 @@
 
 .imgContainer {
     position: relative;
-    aspect-ratio: 1/1;
-    flex: 1;
+    aspect-ratio: 2/1;
+    flex: 2;
 }
 
 .imgContainer img {
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 3%;
     box-shadow: 0 0 0 2px lightgray;
 }
 
