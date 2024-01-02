@@ -23,8 +23,13 @@
   --successBgColor: #1C3329;
 }
 
-body{
+body {
   scroll-behavior: smooth;
+}
+
+ol,
+ul {
+  margin-left: 1.2rem !important;
 }
 
 .LoadingContainer {
