@@ -9,6 +9,7 @@ import { api } from "@/utils/api";
 import Loader from "../Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewComment, updateComments } from "@/redux/slices/commentsSlice";
+import { useRouter } from "next/navigation";
 
 var isIntersected;
 
@@ -17,6 +18,8 @@ const Comments = ({ postSlug, commentsCount }) => {
   const { comments } = useSelector((state) => state.comments);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter()
 
   const fetchComments = async () => {
     try {
@@ -58,6 +61,7 @@ const Comments = ({ postSlug, commentsCount }) => {
       let data = await res.json();
       dispatch(addNewComment(data.comment));
     }
+    router.refresh()
     setLoading(false);
   };
 

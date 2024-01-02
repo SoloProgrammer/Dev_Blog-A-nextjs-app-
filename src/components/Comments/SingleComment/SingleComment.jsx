@@ -40,6 +40,7 @@ const SingleComment = ({ comment }) => {
     let updatedComments = comments.filter((c) => c.id !== comment.id);
     dispatch(updateComments(updatedComments));
     setLoading(false);
+    router.refresh()
   };
 
   const handleEdit = () => {
