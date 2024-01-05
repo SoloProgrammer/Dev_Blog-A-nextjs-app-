@@ -17,8 +17,8 @@
 
 .imgContainer img {
     object-fit: cover;
-    border-radius: 3%;
-    box-shadow: 0 0 0 2px lightgray;
+    border-radius: 0%;
+    box-shadow: 0 0 0 1px lightgray;
 }
 
 .items {
@@ -32,6 +32,7 @@
     display: flex;
     gap: 20px;
     align-items: center;
+    flex-direction: row-reverse;
 }
 
 .textContainer {

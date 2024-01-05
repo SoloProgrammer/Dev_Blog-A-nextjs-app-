@@ -1,0 +1,67 @@
+.mtop{
+    margin-top: 3rem;
+}
+.singlePostLoadingBox {
+    display: flex;
+    width: 100%;
+    transition: .3s all;
+    margin-top: 3rem;
+}
+
+.leftLoadingSide {
+    width: 100%;
+    flex: 5;
+}
+
+.leftLoadingSide .h1 {
+    height: 45px;
+}
+
+.skeletonBG {
+    background: var(--softBg);
+}
+
+.userLoadingBox {
+    margin-top: 2.4rem;
+    margin-bottom: .4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.postLoadingDetail {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.postImg {
+    width: 100%;
+}
+
+.actionLoadingBox {
+    /* margin-block: .1rem; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actionLoadingBox .right{
+    display: flex;
+    gap: 30px;
+}
+
+.rightLoadingSide {
+    flex: 2;
+}

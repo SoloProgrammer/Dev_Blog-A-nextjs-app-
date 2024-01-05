@@ -34,6 +34,7 @@ export const GET = async (req) => {
 const createCommentHandler = async (req) => {
   // Authenticate user sessions on server side
 
+
   const { session } = req
   try {
     const body = await req.json();

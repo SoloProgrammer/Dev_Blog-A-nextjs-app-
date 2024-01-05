@@ -31,6 +31,9 @@ ol,
 ul {
   margin-left: 1.2rem !important;
 }
+.react-loading-skeleton{
+  transition: all .2s !important;
+}
 
 .LoadingContainer {
   min-height: 70dvh;

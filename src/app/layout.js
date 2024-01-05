@@ -9,6 +9,7 @@ import AuthProvider from '@/providers/AuthProvider'
 import ReduxProvider from '@/providers/ReduxProvider'
 import AuthUser from '@/components/Auth/AuthUser'
 const inter = Inter({ subsets: ['latin'] })
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export const metadata = {
   title: 'Next_Dev_Blog',

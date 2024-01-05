@@ -21,8 +21,14 @@ export const ThemeContextprovider = ({ children }) => {
       return newTheme;
     });
   }
+  
+  const skeletonTheme = {
+    color: theme === "light" ? "#efefef" : "#1f273a",
+    highlightColor: theme === "light" ? "#f5f5f5" : "#2d354a",
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggle }}>
+    <ThemeContext.Provider value={{ theme, skeletonTheme, setTheme, toggle }}>
       {children}
     </ThemeContext.Provider>
   );
