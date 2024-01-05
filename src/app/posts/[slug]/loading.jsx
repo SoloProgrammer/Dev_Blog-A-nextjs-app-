@@ -22,7 +22,7 @@ const Loading = () => {
           <div className={styles.userLoadingBox}>
             <div className={styles.user}>
               <div className={styles.userImg}>
-                <Skeleton circle width={60} height={60} />
+                <Skeleton circle width={"100%"} height={"100%"} />
               </div>
               <div className={styles.userInfo}>
                 <Skeleton width={120} height={20} />
@@ -46,7 +46,7 @@ const Loading = () => {
           <Skeleton height={2} width={"100%"} />
           <div className={styles.postLoadingDetail}>
             <div className={styles.postImg}>
-              <Skeleton height={450} width={"100%"} />
+              <Skeleton height={"100%"} width={"100%"} />
             </div>
           </div>
         </div>
