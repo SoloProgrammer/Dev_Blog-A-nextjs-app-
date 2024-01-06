@@ -1,9 +1,10 @@
+"use client"
 import React from 'react'
 
 const loading = () => {
   return (
     <div>
-      Loading..
+      Loading write page..
     </div>
   )
 }

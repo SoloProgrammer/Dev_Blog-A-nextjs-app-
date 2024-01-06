@@ -1,6 +1,6 @@
 .title {
     padding: 10px 0;
-    background: tomato;
+    background: var(--softBg);
     font-weight: 500;
     font-size: 2vmax;
     color: #fff;
