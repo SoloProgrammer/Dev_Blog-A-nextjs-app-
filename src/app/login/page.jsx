@@ -59,6 +59,7 @@ const LoginPage = () => {
             )}
           </div>
           <div
+            onClick={() => signIn("github")}
             className={`${styles.socialLink} ${
               theme !== "dark" ? styles.whiteIcon : styles.darkIcon
             }`}
@@ -72,7 +73,7 @@ const LoginPage = () => {
             </div>
             <span>Sign in with Github</span>
           </div>
-          <div className={styles.socialLink}>
+          <div onClick={() => signIn("facebook")} className={styles.socialLink}>
             <div className={styles.imgContainer}>
               <Image
                 src="https://cdn-icons-png.flaticon.com/512/733/733547.png"

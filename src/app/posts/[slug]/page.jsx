@@ -8,7 +8,7 @@ import { getFormattedPostDate } from "@/utils/date";
 import SavePostIcon from "@/components/SavePostIcon/SavePostIcon";
 import { notFound } from "next/navigation";
 import ExtraActions from "@/components/ExtraActions/ExtraActions";
-import Loading from "./loading";
+import SinglePostLoadingSkeleton from "./loading";
 
 const getSinglePost = async (slug) => {
   const res = await fetch(api.getSinglePost(slug), { cache: "no-store" });
@@ -24,7 +24,7 @@ const SingleBlogPage = async ({ params }) => {
   if (!post) notFound();
 
   return (
-    <Suspense fallback={<Loading/>}>
+    <Suspense fallback={<SinglePostLoadingSkeleton/>}>
       <div className={styles.container}>
         <div className={styles.infoContainer}>
           <h1 className={styles.title}>{post.title}</h1>

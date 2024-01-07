@@ -6,7 +6,7 @@ import styles from "./loading.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ThemeStates } from "@/context/ThemeContext";
 
-const Loading = () => {
+const SinglePostLoadingSkeleton = () => {
   const { skeletonTheme } = ThemeStates();
   return (
     <SkeletonTheme
@@ -98,4 +98,4 @@ export const MenuPostLoading = () => {
   );
 };
 
-export default Loading;
+export default SinglePostLoadingSkeleton;
