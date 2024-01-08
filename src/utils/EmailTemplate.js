@@ -1,6 +1,6 @@
-export const getEmailTemplate = (data) => {
-  const { post } = data;
-  // const {} = post
+export const getEmailTemplate = (post) => {
+  // const { post } = data;
+
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
       <head>
@@ -231,7 +231,7 @@ export const getEmailTemplate = (data) => {
                               <img
                                 style="border-radius: 50%"
                                 width="25"
-                                src="https://lh3.googleusercontent.com/a/ACg8ocIOPt3vWC4DWTZDy8ZYx6EI-zLUNeN_aDrbQ34aRXEuon4=s96-c"
+                                src=${post.user.image}
                                 alt=""
                               />
                             </a>
@@ -240,7 +240,7 @@ export const getEmailTemplate = (data) => {
                         <tr style="display: inline-block">
                           <td>
                             <a target="_blank" style="color: #ddd" href="#"
-                              >SoloPlayz</a
+                              >${post.user.name}</a
                             >
                           </td>
                         </tr>
@@ -254,7 +254,7 @@ export const getEmailTemplate = (data) => {
                                 letter-spacing: 0.04rem;
                                 font-size: 11px;
                               "
-                              >@prathamshinde987@gmail.com</a
+                              >@${post.user.email}</a
                             >
                           </td>
                         </tr>
@@ -264,10 +264,12 @@ export const getEmailTemplate = (data) => {
                   <tr>
                     <td>
                       <a
-                        href="https://dev-blog-a-nextjs-app.vercel.app/posts/next-js-with-prisma-orm"
+                        href="https://dev-blog-a-nextjs-app.vercel.app/posts/${
+                          post.slug
+                        }"
                         ><img
                           style="width: 100%; object-fit: cover; max-height: 260px"
-                          src="https://uploads-ssl.webflow.com/610bb663a35dd3364ddbf08c/633d7a26d52a3258d9815a89_nextjs-prisma-header-min.png"
+                          src=${post.img}
                           alt=""
                       /></a>
                     </td>
@@ -276,26 +278,31 @@ export const getEmailTemplate = (data) => {
                     <td class="post_content">
                       <a
                         style="color: #ddd; text-decoration: none"
-                        href="https://dev-blog-a-nextjs-app.vercel.app/posts/next-js-with-prisma-orm"
+                        href="https://dev-blog-a-nextjs-app.vercel.app/posts/${
+                          post.slug
+                        }"
                       >
                         <h2 style="padding: 30px 0 20px">
-                          Next Js with prisma ORM
+                         ${post.title}
                         </h2>
-                        <p
+                        <div
                           style="
                             padding: 0 0 25px;
                             line-height: 25px;
                             font-size: 15px;
                           "
                         >
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Reiciendis nihil nulla ullam nostrum fuga sed eveniet,
-                          porro consequatur neque incidunt possimus libero? Ea
-                          similique voluptatibu ...
-                        </p>
+                          ${
+                            post.desc.length > 190
+                              ? post.desc.substring(0, 190) + "..."
+                              : post.desc
+                          }
+                        </div>
                       </a>
                       <a
-                        href="https://dev-blog-a-nextjs-app.vercel.app/posts/next-js-with-prisma-orm"
+                        href="https://dev-blog-a-nextjs-app.vercel.app/posts/${
+                          post.slug
+                        }"
                         style="
                           padding: 7px 20px;
                           text-decoration: none;
@@ -359,7 +366,7 @@ export const getEmailTemplate = (data) => {
                         "
                       >
                         You will continue to receive <br />Notifications/Emails
-                        whenever Solo Playz uploads a new post!
+                        whenever ${post.user.name} uploads a new post!
                       </p>
                     </td>
                   </tr>
@@ -371,7 +378,7 @@ export const getEmailTemplate = (data) => {
                         src="https://lh3.googleusercontent.com/a/ACg8ocIOPt3vWC4DWTZDy8ZYx6EI-zLUNeN_aDrbQ34aRXEuon4=s96-c"
                         alt=""
                       />
-                      <h2 style="padding-top: 10px">Solo Playz</h2>
+                      <h2 style="padding-top: 10px">${post.user.name}</h2>
                     </td>
                   </tr>
                   <tr>
@@ -404,5 +411,5 @@ export const getEmailTemplate = (data) => {
         </center>
       </body>
     </html>
-    `
-}
+    `;
+};

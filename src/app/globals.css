@@ -31,6 +31,9 @@ ol,
 ul {
   margin-left: 1.2rem !important;
 }
+.MuiMenu-list{
+  margin-left: 0 !important;
+}
 .react-loading-skeleton{
   transition: all .2s !important;
 }
