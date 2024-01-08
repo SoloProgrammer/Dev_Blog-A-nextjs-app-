@@ -1,4 +1,5 @@
 "use client";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 import React from "react";
 import styles from "./extraActions.module.css";
@@ -8,7 +9,7 @@ import { Link } from "react-scroll";
 const ExtraActions = ({ commentsCount }) => {
   return (
     <div className={styles.extraActionsContainer}>
-      <div className={styles.subBtn}>
+      <div className={styles.subBtn} data-tooltip-id="subscribe-btn">
         <button>Subscribe&nbsp;+</button>
       </div>
       <div className={styles.shareIcon}>
@@ -22,6 +23,15 @@ const ExtraActions = ({ commentsCount }) => {
           </Link>
         </span>
       </div>
+      <ReactTooltip
+        className="react-tooltip"
+        style={{
+          fontSize: ".7rem",
+          borderRadius: "2rem",
+        }}
+        id="subscribe-btn"
+        content="Subscribe to Solo Playz newsletter!"
+      />
     </div>
   );
 };

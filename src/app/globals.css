@@ -16,33 +16,11 @@
   --softBg: #1f273a;
   --lightBG: #121d3a;
   --shadow-light: 0 0 5px var(--bg-light);
-  --bg-lighter: rgba(255, 255, 255, .025);
+  --bg-lighter: rgba(0, 0, 0, .025);
   --bg-light: rgba(255, 255, 255, .1);
   --softTextColor: #a6a6a6;
   --successTextColor: #7EE2B8;
   --successBgColor: #1C3329;
-}
-
-body {
-  scroll-behavior: smooth;
-}
-
-ol,
-ul {
-  margin-left: 1.2rem !important;
-}
-.MuiMenu-list{
-  margin-left: 0 !important;
-}
-.react-loading-skeleton{
-  transition: all .2s !important;
-}
-
-.LoadingContainer {
-  min-height: 70dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .light {
@@ -54,6 +32,36 @@ ul {
   --softTextColor: #626262;
   --successTextColor: #216E4E;
   --successBgColor: #DCFFF1;
+}
+
+.react-tooltip{
+  /* background: var(); */
+  font-size: .7rem;
+  border-radius: 2rem;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+
+ol,
+ul {
+  margin-left: 1.2rem !important;
+}
+
+.MuiMenu-list {
+  margin-left: 0 !important;
+}
+
+.react-loading-skeleton {
+  transition: all .2s !important;
+}
+
+.LoadingContainer {
+  min-height: 70dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 

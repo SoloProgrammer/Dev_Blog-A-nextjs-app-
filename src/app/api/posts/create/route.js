@@ -13,8 +13,8 @@ const createPostHandler = async (req) => {
       data: { ...body, userEmail: session.user.email },
       include: { user: true },
     });
-    console.log(post, "post-----");
 
+    // Sending Emails to subscribers of post author! 
     sendEmail(
       `"Dev_Blog/@${post.user.name}" prathamshinde987@gmail.com`,
       ["pratham.shinde@techsierra.in", "pratham.shinde@wunderkind.co"],

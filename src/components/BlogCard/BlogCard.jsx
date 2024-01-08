@@ -18,21 +18,23 @@ const BlogCard = ({ post, showBtn = true }) => {
   );
 
   return (
-    <Link href={`/posts/${post.slug}`} style={{ flexGrow: 1 }}>
-      <div className={styles.post}>
-        <div className={styles.imgContainer}>
+    <div className={styles.post}>
+      <div className={styles.imgContainer}>
+        <Link href={`/posts/${post.slug}`} style={{ flexGrow: 1 }}>
           <Image src={post.img} priority={false} fill alt="alt" />
-        </div>
-        <div className={styles.postTextContent}>
-          <div className={styles.seperator}>
-            <div className={styles.details}>
-              <span className={styles.date}>
-                {getFormattedPostDate(post.createdAt)} -{" "}
-              </span>
-              <span className={styles.cat}>&nbsp;{post.catSlug}</span>
-            </div>
-            <SavePostIcon slug={post.slug} postId={post.id} />
+        </Link>
+      </div>
+      <div className={styles.postTextContent}>
+        <div className={styles.seperator}>
+          <div className={styles.details}>
+            <span className={styles.date}>
+              {getFormattedPostDate(post.createdAt)} -{" "}
+            </span>
+            <span className={styles.cat}>&nbsp;{post.catSlug}</span>
           </div>
+          <SavePostIcon slug={post.slug} postId={post.id} />
+        </div>
+        <Link href={`/posts/${post.slug}`} style={{ flexGrow: 1 }}>
           <h3 style={{ marginBottom: "1rem" }} className={styles.postTitle}>
             {post.title}
           </h3>
@@ -45,9 +47,9 @@ const BlogCard = ({ post, showBtn = true }) => {
               <Commonbtn text={"Read more"} size="small" icon={icon} />
             </Link>
           )}
-        </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

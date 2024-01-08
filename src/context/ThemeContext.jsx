@@ -11,7 +11,7 @@ export const ThemeContextprovider = ({ children }) => {
       return localStorage.getItem(key);
     }
   }
-  const preservedTheme = getFromLocalStorage("theme") || LIGHT;
+  const preservedTheme = getFromLocalStorage("theme") || DARK;
   const [theme, setTheme] = useState(preservedTheme);
 
   function toggle() {
@@ -21,7 +21,7 @@ export const ThemeContextprovider = ({ children }) => {
       return newTheme;
     });
   }
-  
+
   const skeletonTheme = {
     color: theme === "light" ? "#efefef" : "#1f273a",
     highlightColor: theme === "light" ? "#f5f5f5" : "#2d354a",

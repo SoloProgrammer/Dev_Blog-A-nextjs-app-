@@ -11,7 +11,7 @@ import Loader from "../Loader/Loader";
 
 const SavePostIcon = ({ slug, postId }) => {
   const { user, loading } = useSelector((state) => state.auth);
-  
+
   const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -21,6 +21,8 @@ const SavePostIcon = ({ slug, postId }) => {
     target.classList.toggle("fill");
   }
   const hanldeSavePost = async (e) => {
+    e.stopPropagation();
+
     if (!user) return router.push("/login");
     setIsSaving(true);
     if (e.target.classList.contains("fill")) {

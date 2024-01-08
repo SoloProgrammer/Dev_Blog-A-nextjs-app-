@@ -10,7 +10,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    transition: .2s opacity;
+    transition: .1s opacity;
     opacity: 0;
     pointer-events: none;
 
@@ -27,8 +27,7 @@
     min-height: 100px;
     box-shadow: var(--shadow-light);
     border-radius: .3rem;
-    transition: .2s all;
-    /* transition-delay: .3s; */
+    transition: .1s all;
     transform: scale(.5);
     max-width: 700px;
 }
@@ -39,6 +38,7 @@
 
 @media screen and (max-width:640px) {
     .inner {
+        transition-duration: .2s;
         width: 97% !important;
     }
 }
