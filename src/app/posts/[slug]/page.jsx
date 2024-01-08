@@ -24,7 +24,7 @@ const SingleBlogPage = async ({ params }) => {
   if (!post) notFound();
 
   return (
-    <Suspense fallback={<SinglePostLoadingSkeleton/>}>
+    <Suspense fallback={<SinglePostLoadingSkeleton />}>
       <div className={styles.container}>
         <div className={styles.infoContainer}>
           <h1 className={styles.title}>{post.title}</h1>
@@ -47,7 +47,11 @@ const SingleBlogPage = async ({ params }) => {
             </div>
             <SavePostIcon slug={slug} postId={post.id} />
           </div>
-          <ExtraActions commentsCount={post?.commentsCount} slug={post.slug} />
+          <ExtraActions
+            commentsCount={post?.commentsCount}
+            slug={post.slug}
+            postAuthor={post.user}
+          />
           <div className={styles.imgContainer}>
             <Image src={post.img} priority={false} fill alt="post_Img" />
           </div>

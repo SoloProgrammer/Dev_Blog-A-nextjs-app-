@@ -5,11 +5,28 @@ import React from "react";
 import styles from "./extraActions.module.css";
 import { FaRegComment } from "react-icons/fa";
 import { Link } from "react-scroll";
+import { useSelector } from "react-redux";
+import { api } from "@/utils/api";
 
-const ExtraActions = ({ commentsCount }) => {
+const ExtraActions = ({ postAuthor, commentsCount }) => {
+  const { user } = useSelector((state) => state.auth);
+  const handleSubscribe = async () => {
+    const query = `?subId=${user.id}&authorId=${postAuthor.id}`;
+    try {
+      const res = await fetch(api.subscribeAuthor(query), {
+        method: "PUT",
+      });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
   return (
     <div className={styles.extraActionsContainer}>
-      <div className={styles.subBtn} data-tooltip-id="subscribe-btn">
+      <div
+        onClick={handleSubscribe}
+        className={styles.subBtn}
+        data-tooltip-id="subscribe-btn"
+      >
         <button>Subscribe&nbsp;+</button>
       </div>
       <div className={styles.shareIcon}>
